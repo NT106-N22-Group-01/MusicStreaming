@@ -442,6 +442,7 @@
 			listViewAlbum.TabIndex = 1;
 			listViewAlbum.UseCompatibleStateImageBehavior = false;
 			listViewAlbum.View = View.List;
+			listViewAlbum.SelectedIndexChanged += listViewAlbum_SelectedIndexChanged;
 			// 
 			// columnAlbum
 			// 
@@ -460,6 +461,7 @@
 			listViewArtist.TabIndex = 0;
 			listViewArtist.UseCompatibleStateImageBehavior = false;
 			listViewArtist.View = View.List;
+			listViewArtist.SelectedIndexChanged += listViewArtist_SelectedIndexChanged;
 			// 
 			// columnArtist
 			// 

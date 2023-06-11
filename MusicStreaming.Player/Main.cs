@@ -5,6 +5,7 @@ using MusicStreaming.Config;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using MusicStreaming.Player;
+using System.Diagnostics;
 
 namespace MusicStreaming
 {
@@ -15,6 +16,9 @@ namespace MusicStreaming
 		List<SongQueryModel> songs;
 		Dictionary<int, ArtistModel> artists = new Dictionary<int, ArtistModel>();
 		Dictionary<int, AlbumModel> albums = new Dictionary<int, AlbumModel>();
+		int? SelectedArtistID;
+		int? SelectedAlbumID;
+		private Process ffplayProcess;
 
 		public Main(string Token)
 		{
@@ -159,18 +163,10 @@ namespace MusicStreaming
 			this.WindowState = FormWindowState.Minimized;
 		}
 
-		private void ClearAllMenuCheck()
-		{
-			foreach (Button menuButton in panelMenu.Controls.OfType<Button>())
-				menuButton.BackColor = Color.FromArgb(25, 26, 31);
-		}
-
 		private void ActiveMenu(Button btn)
 		{
 			btn.BackColor = Color.FromArgb(255, 128, 0);
 		}
-
-
 
 		private void btnPlay_Click(object sender, EventArgs e)
 		{
@@ -199,25 +195,21 @@ namespace MusicStreaming
 
 		private void btnCate_Click(object sender, EventArgs e)
 		{
-			ClearAllMenuCheck();
 			ActiveMenu(sender as Button);
 		}
 
 		private void btnTop_Click(object sender, EventArgs e)
 		{
-			ClearAllMenuCheck();
 			ActiveMenu(sender as Button);
 		}
 
 		private void btnBXH_Click(object sender, EventArgs e)
 		{
-			ClearAllMenuCheck();
 			ActiveMenu(sender as Button);
 		}
 
 		private void btnPlaylist_Click(object sender, EventArgs e)
 		{
-			ClearAllMenuCheck();
 			ActiveMenu(sender as Button);
 		}
 
@@ -265,7 +257,7 @@ namespace MusicStreaming
 
 					if (!albums.ContainsKey(song.album_id))
 					{
-						albums.Add(song.album_id, new AlbumModel { Id = song.album_id, Name = song.Album });
+						albums.Add(song.album_id, new AlbumModel { Id = song.album_id, Name = song.Album, ArtistID = song.artist_id });
 					}
 				}
 			}
@@ -315,7 +307,7 @@ namespace MusicStreaming
 			}
 		}
 
-		private async Task PopulateAlbumName()
+		private async Task PopulateAlbumName(int? artistID = null)
 		{
 			listViewAlbum.Items.Clear();
 
@@ -323,17 +315,23 @@ namespace MusicStreaming
 			listViewAlbum.Items.Add(new ListViewItem("All"));
 			foreach (var album in allAlbum)
 			{
+				if (album.ArtistID != artistID && artistID != null)
+					continue;
 				ListViewItem item = new ListViewItem(album.Name);
 				item.Tag = album;
 				listViewAlbum.Items.Add(item);
 			}
 		}
 
-		private async Task PopulateSong()
+		private async Task PopulateSong(int? artistID = null, int? albumID = null)
 		{
 			listViewSongs.Items.Clear();
 			foreach (SongQueryModel song in songs)
 			{
+				if (song.artist_id != artistID && artistID != null)
+					continue;
+				if (song.album_id != albumID && albumID != null)
+					continue;
 				ListViewItem item = new ListViewItem(song.Track.ToString());
 				item.SubItems.Add(song.Title);
 				item.SubItems.Add(song.Artist);
@@ -345,6 +343,46 @@ namespace MusicStreaming
 				item.Tag = song;
 
 				listViewSongs.Items.Add(item);
+			}
+		}
+
+		private async void listViewArtist_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (listViewArtist.SelectedItems.Count <= 0)
+			{
+				return;
+			}
+			if (listViewArtist.SelectedItems[0].Text == "All")
+			{
+				SelectedArtistID = null;
+				await PopulateAlbumName();
+				await PopulateSong();
+			}
+			else
+			{
+				ArtistModel selectedArtist = (ArtistModel)listViewArtist.SelectedItems[0].Tag;
+				SelectedArtistID = selectedArtist.Id;
+				await PopulateAlbumName(SelectedArtistID);
+				await PopulateSong(SelectedArtistID);
+			}
+		}
+
+		private async void listViewAlbum_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (listViewAlbum.SelectedItems.Count <= 0)
+			{
+				return;
+			}
+			if (listViewAlbum.SelectedItems[0].Text == "All")
+			{
+				SelectedAlbumID = null;
+				await PopulateSong(SelectedArtistID);
+			}
+			else
+			{
+				AlbumModel selectedAlbum = (AlbumModel)listViewAlbum.SelectedItems[0].Tag;
+				SelectedAlbumID = selectedAlbum.Id;
+				await PopulateSong(SelectedArtistID, SelectedAlbumID);
 			}
 		}
 	}
