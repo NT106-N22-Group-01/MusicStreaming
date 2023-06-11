@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using MusicStreaming.Config;
 
 namespace MusicStreaming
 {
@@ -33,7 +34,7 @@ namespace MusicStreaming
 
 			try
 			{
-				var response = await httpClient.PostAsync($"{Config.ApiBaseUrl}/v1/login/token/", content);
+				var response = await httpClient.PostAsync($"{Config.Config.ApiBaseUrl}/v1/login/token/", content);
 				if (response.IsSuccessStatusCode)
 				{
 					string token = await response.Content.ReadAsStringAsync();

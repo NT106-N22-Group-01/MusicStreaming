@@ -44,7 +44,7 @@ namespace MusicStreaming
 
 			try
 			{
-				var response = await httpClient.PostAsync($"{Config.ApiBaseUrl}/v1/register/token/", content);
+				var response = await httpClient.PostAsync($"{Config.Config.ApiBaseUrl}/v1/register/token/", content);
 
 				if (response.IsSuccessStatusCode)
 				{

@@ -1,4 +1,4 @@
-﻿namespace MusicStreaming
+﻿namespace MusicStreaming.Config
 {
 	public static class Config
 	{
