@@ -43,13 +43,24 @@
 			btnMin = new FontAwesome.Sharp.IconButton();
 			btnMax = new FontAwesome.Sharp.IconButton();
 			btnExit = new FontAwesome.Sharp.IconButton();
-			panel4 = new Panel();
-			panel3 = new Panel();
-			rjTextBox1 = new RJCodeAdvance.RJControls.RJTextBox();
-			iconButton1 = new FontAwesome.Sharp.IconButton();
 			timer1 = new System.Windows.Forms.Timer(components);
 			panel9 = new Panel();
 			panelContainer = new Panel();
+			label4 = new Label();
+			listViewSongs = new ListView();
+			columnNo = new ColumnHeader();
+			columnSongName = new ColumnHeader();
+			columnSongArtist = new ColumnHeader();
+			columnSongAlbum = new ColumnHeader();
+			columnSongDuration = new ColumnHeader();
+			columnSongView = new ColumnHeader();
+			columnSongFormat = new ColumnHeader();
+			label3 = new Label();
+			label2 = new Label();
+			listViewAlbum = new ListView();
+			columnAlbum = new ColumnHeader();
+			listViewArtist = new ListView();
+			columnArtist = new ColumnHeader();
 			panel12 = new Panel();
 			iconButton2 = new FontAwesome.Sharp.IconButton();
 			trackbarVolume = new ReaLTaiizor.Controls.HopeTrackBar();
@@ -69,11 +80,14 @@
 			lbSongName = new Label();
 			pbSong = new PictureBox();
 			tableLayoutPanel1 = new TableLayoutPanel();
+			panel3 = new Panel();
+			rjTextBox1 = new RJCodeAdvance.RJControls.RJTextBox();
+			iconButton1 = new FontAwesome.Sharp.IconButton();
+			panel4 = new Panel();
 			panelMenu.SuspendLayout();
 			panel5.SuspendLayout();
 			panelTitleBar.SuspendLayout();
-			panel4.SuspendLayout();
-			panel3.SuspendLayout();
+			panelContainer.SuspendLayout();
 			panel12.SuspendLayout();
 			panel8.SuspendLayout();
 			panel11.SuspendLayout();
@@ -86,6 +100,8 @@
 			panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pbSong).BeginInit();
 			tableLayoutPanel1.SuspendLayout();
+			panel3.SuspendLayout();
+			panel4.SuspendLayout();
 			SuspendLayout();
 			// 
 			// panelMenu
@@ -226,7 +242,7 @@
 			label1.AutoSize = true;
 			label1.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
 			label1.ForeColor = Color.White;
-			label1.Location = new Point(35, 26);
+			label1.Location = new Point(39, 31);
 			label1.Name = "label1";
 			label1.Size = new Size(132, 45);
 			label1.TabIndex = 3;
@@ -303,66 +319,6 @@
 			btnExit.UseVisualStyleBackColor = true;
 			btnExit.Click += btnExit_Click;
 			// 
-			// panel4
-			// 
-			panel4.BackColor = Color.FromArgb(27, 28, 34);
-			panel4.Controls.Add(panel3);
-			panel4.Dock = DockStyle.Top;
-			panel4.Location = new Point(227, 23);
-			panel4.Name = "panel4";
-			panel4.Size = new Size(1268, 77);
-			panel4.TabIndex = 3;
-			// 
-			// panel3
-			// 
-			panel3.Controls.Add(rjTextBox1);
-			panel3.Controls.Add(iconButton1);
-			panel3.Location = new Point(43, 17);
-			panel3.Name = "panel3";
-			panel3.Size = new Size(482, 38);
-			panel3.TabIndex = 1;
-			// 
-			// rjTextBox1
-			// 
-			rjTextBox1.BackColor = Color.FromArgb(33, 38, 69);
-			rjTextBox1.BorderColor = Color.FromArgb(33, 38, 69);
-			rjTextBox1.BorderFocusColor = Color.HotPink;
-			rjTextBox1.BorderRadius = 0;
-			rjTextBox1.BorderSize = 2;
-			rjTextBox1.Dock = DockStyle.Fill;
-			rjTextBox1.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point);
-			rjTextBox1.ForeColor = Color.White;
-			rjTextBox1.Location = new Point(35, 0);
-			rjTextBox1.Margin = new Padding(4);
-			rjTextBox1.Multiline = false;
-			rjTextBox1.Name = "rjTextBox1";
-			rjTextBox1.Padding = new Padding(10, 7, 10, 7);
-			rjTextBox1.PasswordChar = false;
-			rjTextBox1.PlaceholderColor = Color.DarkGray;
-			rjTextBox1.PlaceholderText = "";
-			rjTextBox1.Size = new Size(447, 36);
-			rjTextBox1.TabIndex = 1;
-			rjTextBox1.Texts = "";
-			rjTextBox1.UnderlinedStyle = false;
-			// 
-			// iconButton1
-			// 
-			iconButton1.BackColor = Color.FromArgb(33, 38, 69);
-			iconButton1.Dock = DockStyle.Left;
-			iconButton1.FlatAppearance.BorderColor = Color.White;
-			iconButton1.FlatAppearance.BorderSize = 0;
-			iconButton1.FlatStyle = FlatStyle.Flat;
-			iconButton1.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlass;
-			iconButton1.IconColor = Color.White;
-			iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			iconButton1.IconSize = 24;
-			iconButton1.Location = new Point(0, 0);
-			iconButton1.Name = "iconButton1";
-			iconButton1.Size = new Size(35, 38);
-			iconButton1.TabIndex = 0;
-			iconButton1.TextImageRelation = TextImageRelation.ImageBeforeText;
-			iconButton1.UseVisualStyleBackColor = false;
-			// 
 			// timer1
 			// 
 			timer1.Tick += timer1_Tick;
@@ -377,11 +333,138 @@
 			// 
 			// panelContainer
 			// 
+			panelContainer.Controls.Add(label4);
+			panelContainer.Controls.Add(listViewSongs);
+			panelContainer.Controls.Add(label3);
+			panelContainer.Controls.Add(label2);
+			panelContainer.Controls.Add(listViewAlbum);
+			panelContainer.Controls.Add(listViewArtist);
 			panelContainer.Dock = DockStyle.Fill;
 			panelContainer.Location = new Point(254, 100);
 			panelContainer.Name = "panelContainer";
 			panelContainer.Size = new Size(1241, 689);
 			panelContainer.TabIndex = 5;
+			// 
+			// label4
+			// 
+			label4.AutoSize = true;
+			label4.BackColor = Color.FromArgb(25, 26, 31);
+			label4.Font = new Font("Open Sans", 11F, FontStyle.Bold, GraphicsUnit.Point);
+			label4.ForeColor = Color.White;
+			label4.Location = new Point(35, 320);
+			label4.Name = "label4";
+			label4.Size = new Size(66, 32);
+			label4.TabIndex = 5;
+			label4.Text = "Song";
+			label4.TextAlign = ContentAlignment.TopRight;
+			// 
+			// listViewSongs
+			// 
+			listViewSongs.BackColor = Color.FromArgb(37, 38, 44);
+			listViewSongs.Columns.AddRange(new ColumnHeader[] { columnNo, columnSongName, columnSongArtist, columnSongAlbum, columnSongDuration, columnSongView, columnSongFormat });
+			listViewSongs.Font = new Font("Open Sans", 10F, FontStyle.Bold, GraphicsUnit.Point);
+			listViewSongs.ForeColor = Color.White;
+			listViewSongs.Location = new Point(35, 364);
+			listViewSongs.Name = "listViewSongs";
+			listViewSongs.Size = new Size(1166, 304);
+			listViewSongs.TabIndex = 4;
+			listViewSongs.UseCompatibleStateImageBehavior = false;
+			listViewSongs.View = View.Details;
+			// 
+			// columnNo
+			// 
+			columnNo.Text = "No";
+			// 
+			// columnSongName
+			// 
+			columnSongName.Text = "Name";
+			columnSongName.Width = 350;
+			// 
+			// columnSongArtist
+			// 
+			columnSongArtist.Text = "Artist";
+			columnSongArtist.Width = 210;
+			// 
+			// columnSongAlbum
+			// 
+			columnSongAlbum.Text = "Album";
+			columnSongAlbum.Width = 210;
+			// 
+			// columnSongDuration
+			// 
+			columnSongDuration.Text = "Duration";
+			columnSongDuration.Width = 140;
+			// 
+			// columnSongView
+			// 
+			columnSongView.Text = "View";
+			columnSongView.Width = 100;
+			// 
+			// columnSongFormat
+			// 
+			columnSongFormat.Text = "Format";
+			columnSongFormat.Width = 90;
+			// 
+			// label3
+			// 
+			label3.AutoSize = true;
+			label3.BackColor = Color.FromArgb(25, 26, 31);
+			label3.Font = new Font("Open Sans", 11F, FontStyle.Bold, GraphicsUnit.Point);
+			label3.ForeColor = Color.White;
+			label3.Location = new Point(651, 9);
+			label3.Name = "label3";
+			label3.Size = new Size(86, 32);
+			label3.TabIndex = 3;
+			label3.Text = "Album";
+			label3.TextAlign = ContentAlignment.TopRight;
+			// 
+			// label2
+			// 
+			label2.AutoSize = true;
+			label2.BackColor = Color.FromArgb(25, 26, 31);
+			label2.Font = new Font("Open Sans", 11F, FontStyle.Bold, GraphicsUnit.Point);
+			label2.ForeColor = Color.White;
+			label2.Location = new Point(35, 9);
+			label2.Name = "label2";
+			label2.Size = new Size(77, 32);
+			label2.TabIndex = 2;
+			label2.Text = "Artist";
+			// 
+			// listViewAlbum
+			// 
+			listViewAlbum.BackColor = Color.FromArgb(37, 38, 44);
+			listViewAlbum.Columns.AddRange(new ColumnHeader[] { columnAlbum });
+			listViewAlbum.Font = new Font("Open Sans", 10F, FontStyle.Bold, GraphicsUnit.Point);
+			listViewAlbum.ForeColor = Color.White;
+			listViewAlbum.Location = new Point(651, 48);
+			listViewAlbum.Name = "listViewAlbum";
+			listViewAlbum.Size = new Size(550, 255);
+			listViewAlbum.TabIndex = 1;
+			listViewAlbum.UseCompatibleStateImageBehavior = false;
+			listViewAlbum.View = View.List;
+			// 
+			// columnAlbum
+			// 
+			columnAlbum.Text = "Album";
+			columnAlbum.Width = 540;
+			// 
+			// listViewArtist
+			// 
+			listViewArtist.BackColor = Color.FromArgb(37, 38, 44);
+			listViewArtist.Columns.AddRange(new ColumnHeader[] { columnArtist });
+			listViewArtist.Font = new Font("Open Sans", 10F, FontStyle.Bold, GraphicsUnit.Point);
+			listViewArtist.ForeColor = Color.White;
+			listViewArtist.Location = new Point(35, 48);
+			listViewArtist.Name = "listViewArtist";
+			listViewArtist.Size = new Size(550, 255);
+			listViewArtist.TabIndex = 0;
+			listViewArtist.UseCompatibleStateImageBehavior = false;
+			listViewArtist.View = View.List;
+			// 
+			// columnArtist
+			// 
+			columnArtist.Text = "Artist";
+			columnArtist.Width = 540;
 			// 
 			// panel12
 			// 
@@ -669,6 +752,66 @@
 			tableLayoutPanel1.Size = new Size(1495, 110);
 			tableLayoutPanel1.TabIndex = 6;
 			// 
+			// panel3
+			// 
+			panel3.Controls.Add(rjTextBox1);
+			panel3.Controls.Add(iconButton1);
+			panel3.Location = new Point(43, 17);
+			panel3.Name = "panel3";
+			panel3.Size = new Size(482, 38);
+			panel3.TabIndex = 1;
+			// 
+			// rjTextBox1
+			// 
+			rjTextBox1.BackColor = Color.FromArgb(33, 38, 69);
+			rjTextBox1.BorderColor = Color.FromArgb(33, 38, 69);
+			rjTextBox1.BorderFocusColor = Color.HotPink;
+			rjTextBox1.BorderRadius = 0;
+			rjTextBox1.BorderSize = 2;
+			rjTextBox1.Dock = DockStyle.Fill;
+			rjTextBox1.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point);
+			rjTextBox1.ForeColor = Color.White;
+			rjTextBox1.Location = new Point(35, 0);
+			rjTextBox1.Margin = new Padding(4);
+			rjTextBox1.Multiline = false;
+			rjTextBox1.Name = "rjTextBox1";
+			rjTextBox1.Padding = new Padding(10, 7, 10, 7);
+			rjTextBox1.PasswordChar = false;
+			rjTextBox1.PlaceholderColor = Color.DarkGray;
+			rjTextBox1.PlaceholderText = "";
+			rjTextBox1.Size = new Size(447, 36);
+			rjTextBox1.TabIndex = 1;
+			rjTextBox1.Texts = "";
+			rjTextBox1.UnderlinedStyle = false;
+			// 
+			// iconButton1
+			// 
+			iconButton1.BackColor = Color.FromArgb(33, 38, 69);
+			iconButton1.Dock = DockStyle.Left;
+			iconButton1.FlatAppearance.BorderColor = Color.White;
+			iconButton1.FlatAppearance.BorderSize = 0;
+			iconButton1.FlatStyle = FlatStyle.Flat;
+			iconButton1.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlass;
+			iconButton1.IconColor = Color.White;
+			iconButton1.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			iconButton1.IconSize = 24;
+			iconButton1.Location = new Point(0, 0);
+			iconButton1.Name = "iconButton1";
+			iconButton1.Size = new Size(35, 38);
+			iconButton1.TabIndex = 0;
+			iconButton1.TextImageRelation = TextImageRelation.ImageBeforeText;
+			iconButton1.UseVisualStyleBackColor = false;
+			// 
+			// panel4
+			// 
+			panel4.BackColor = Color.FromArgb(27, 28, 34);
+			panel4.Controls.Add(panel3);
+			panel4.Dock = DockStyle.Top;
+			panel4.Location = new Point(227, 23);
+			panel4.Name = "panel4";
+			panel4.Size = new Size(1268, 77);
+			panel4.TabIndex = 3;
+			// 
 			// Main
 			// 
 			AutoScaleMode = AutoScaleMode.None;
@@ -684,13 +827,14 @@
 			Name = "Main";
 			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Music Streaming";
+			Load += Main_Load;
 			Resize += Main_Resize;
 			panelMenu.ResumeLayout(false);
 			panel5.ResumeLayout(false);
 			panel5.PerformLayout();
 			panelTitleBar.ResumeLayout(false);
-			panel4.ResumeLayout(false);
-			panel3.ResumeLayout(false);
+			panelContainer.ResumeLayout(false);
+			panelContainer.PerformLayout();
 			panel12.ResumeLayout(false);
 			panel8.ResumeLayout(false);
 			panel11.ResumeLayout(false);
@@ -705,6 +849,8 @@
 			panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)pbSong).EndInit();
 			tableLayoutPanel1.ResumeLayout(false);
+			panel3.ResumeLayout(false);
+			panel4.ResumeLayout(false);
 			ResumeLayout(false);
 		}
 
@@ -714,13 +860,9 @@
 		private System.Windows.Forms.Panel panel5;
 		private System.Windows.Forms.Panel panel7;
 		private FontAwesome.Sharp.IconButton iconButton5;
-		private System.Windows.Forms.Panel panel4;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Timer timer1;
-		private System.Windows.Forms.Panel panel3;
-		private FontAwesome.Sharp.IconButton iconButton1;
-		private RJCodeAdvance.RJControls.RJTextBox rjTextBox1;
 		private System.Windows.Forms.Panel panel9;
 		private System.Windows.Forms.Panel panelContainer;
 		private FontAwesome.Sharp.IconButton btnHome;
@@ -748,5 +890,24 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private FontAwesome.Sharp.IconButton iconButton4;
 		private FontAwesome.Sharp.IconButton iconButton3;
+		private Panel panel3;
+		private RJCodeAdvance.RJControls.RJTextBox rjTextBox1;
+		private FontAwesome.Sharp.IconButton iconButton1;
+		private Panel panel4;
+		private ListView listViewAlbum;
+		private ListView listViewArtist;
+		private ColumnHeader columnArtist;
+		private Label label3;
+		private Label label2;
+		private Label label4;
+		private ListView listViewSongs;
+		private ColumnHeader columnNo;
+		private ColumnHeader columnSongName;
+		private ColumnHeader columnSongArtist;
+		private ColumnHeader columnSongAlbum;
+		private ColumnHeader columnSongDuration;
+		private ColumnHeader columnSongView;
+		private ColumnHeader columnSongFormat;
+		private ColumnHeader columnAlbum;
 	}
 }

@@ -1,6 +1,10 @@
 ﻿using System.Data;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
+using MusicStreaming.Player.Model;
+using MusicStreaming.Config;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using MusicStreaming.Player;
 
 namespace MusicStreaming
 {
@@ -8,11 +12,14 @@ namespace MusicStreaming
 	{
 		private int borderSize = 2;
 		private Size formSize;
+		List<SongQueryModel> songs;
+		Dictionary<int, ArtistModel> artists = new Dictionary<int, ArtistModel>();
+		Dictionary<int, AlbumModel> albums = new Dictionary<int, AlbumModel>();
 
-		public Main()
+		public Main(string Token)
 		{
 			InitializeComponent();
-
+			TokenManager.AccessToken = Token;
 		}
 
 		//Drag Form
@@ -231,6 +238,114 @@ namespace MusicStreaming
 		private void panel1_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		private async void Main_Load(object sender, EventArgs e)
+		{
+			await PopulateModels("");
+			await PopulateArtistNames();
+			await PopulateAlbumName();
+			await PopulateSong();
+		}
+
+		private async Task PopulateModels(string query = "")
+		{
+			songs = await GetSongsFromApi(query);
+			artists.Clear();
+			albums.Clear();
+
+			if (songs != null)
+			{
+				foreach (var song in songs)
+				{
+					if (!artists.ContainsKey(song.artist_id))
+					{
+						artists.Add(song.artist_id, new ArtistModel { Id = song.artist_id, Name = song.Artist });
+					}
+
+					if (!albums.ContainsKey(song.album_id))
+					{
+						albums.Add(song.album_id, new AlbumModel { Id = song.album_id, Name = song.Album });
+					}
+				}
+			}
+		}
+
+		private async Task<List<SongQueryModel>> GetSongsFromApi(string query)
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				try
+				{
+					client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TokenManager.AccessToken);
+					string apiUrl = $"{Config.Config.ApiBaseUrl}/v1/search/?q={query}";
+					HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+					if (response.IsSuccessStatusCode)
+					{
+						var apiResponse = await response.Content.ReadAsStringAsync();
+						List<SongQueryModel> songs = JsonConvert.DeserializeObject<List<SongQueryModel>>(apiResponse);
+						return songs;
+					}
+					else
+					{
+						MessageBox.Show("Failed to fetch songs from API.");
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("An error occurred: " + ex.Message);
+				}
+			}
+
+			return null;
+		}
+
+		private async Task PopulateArtistNames()
+		{
+			listViewArtist.Items.Clear();
+
+			List<ArtistModel> allArtists = artists.Values.ToList();
+			listViewArtist.Items.Add(new ListViewItem("All"));
+			foreach (var artist in allArtists)
+			{
+				ListViewItem item = new ListViewItem(artist.Name);
+				item.Tag = artist;
+				listViewArtist.Items.Add(item);
+			}
+		}
+
+		private async Task PopulateAlbumName()
+		{
+			listViewAlbum.Items.Clear();
+
+			List<AlbumModel> allAlbum = albums.Values.ToList();
+			listViewAlbum.Items.Add(new ListViewItem("All"));
+			foreach (var album in allAlbum)
+			{
+				ListViewItem item = new ListViewItem(album.Name);
+				item.Tag = album;
+				listViewAlbum.Items.Add(item);
+			}
+		}
+
+		private async Task PopulateSong()
+		{
+			listViewSongs.Items.Clear();
+			foreach (SongQueryModel song in songs)
+			{
+				ListViewItem item = new ListViewItem(song.Track.ToString());
+				item.SubItems.Add(song.Title);
+				item.SubItems.Add(song.Artist);
+				item.SubItems.Add(song.Album);
+				item.SubItems.Add(TimeSpan.FromMilliseconds(song.Duration).ToString("mm\\:ss"));
+				item.SubItems.Add(song.View.ToString());
+				item.SubItems.Add(song.Format);
+
+				item.Tag = song;
+
+				listViewSongs.Items.Add(item);
+			}
 		}
 	}
 }
