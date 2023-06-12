@@ -43,6 +43,7 @@ namespace MusicStreaming.Auth
 					string tokenValue = responseObj.token;
 
 					var MainForm = new Player.Main(tokenValue);
+					MainForm.FormClosed += (sender, e) => { this.Show(); };
 					this.Hide();
 					MainForm.Show();
 				}

@@ -34,7 +34,7 @@
 			iconButton4 = new FontAwesome.Sharp.IconButton();
 			iconButton3 = new FontAwesome.Sharp.IconButton();
 			panel7 = new Panel();
-			iconButton5 = new FontAwesome.Sharp.IconButton();
+			iconButtonLogout = new FontAwesome.Sharp.IconButton();
 			btnHome = new FontAwesome.Sharp.IconButton();
 			panel5 = new Panel();
 			label1 = new Label();
@@ -112,7 +112,7 @@
 			panelMenu.Controls.Add(iconButton4);
 			panelMenu.Controls.Add(iconButton3);
 			panelMenu.Controls.Add(panel7);
-			panelMenu.Controls.Add(iconButton5);
+			panelMenu.Controls.Add(iconButtonLogout);
 			panelMenu.Controls.Add(btnHome);
 			panelMenu.Controls.Add(panel5);
 			panelMenu.Dock = DockStyle.Left;
@@ -179,29 +179,30 @@
 			panel7.Size = new Size(227, 1);
 			panel7.TabIndex = 6;
 			// 
-			// iconButton5
+			// iconButtonLogout
 			// 
-			iconButton5.BackColor = Color.FromArgb(25, 26, 31);
-			iconButton5.Dock = DockStyle.Bottom;
-			iconButton5.FlatAppearance.BorderSize = 0;
-			iconButton5.FlatStyle = FlatStyle.Flat;
-			iconButton5.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-			iconButton5.ForeColor = Color.White;
-			iconButton5.IconChar = FontAwesome.Sharp.IconChar.Gear;
-			iconButton5.IconColor = Color.White;
-			iconButton5.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			iconButton5.IconSize = 30;
-			iconButton5.ImageAlign = ContentAlignment.MiddleLeft;
-			iconButton5.Location = new Point(0, 741);
-			iconButton5.Name = "iconButton5";
-			iconButton5.Padding = new Padding(10, 0, 0, 0);
-			iconButton5.Size = new Size(227, 48);
-			iconButton5.TabIndex = 5;
-			iconButton5.Tag = "Cài đặt";
-			iconButton5.Text = "   Cài đặt";
-			iconButton5.TextAlign = ContentAlignment.MiddleLeft;
-			iconButton5.TextImageRelation = TextImageRelation.ImageBeforeText;
-			iconButton5.UseVisualStyleBackColor = false;
+			iconButtonLogout.BackColor = Color.FromArgb(25, 26, 31);
+			iconButtonLogout.Dock = DockStyle.Bottom;
+			iconButtonLogout.FlatAppearance.BorderSize = 0;
+			iconButtonLogout.FlatStyle = FlatStyle.Flat;
+			iconButtonLogout.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+			iconButtonLogout.ForeColor = Color.White;
+			iconButtonLogout.IconChar = FontAwesome.Sharp.IconChar.TimesCircle;
+			iconButtonLogout.IconColor = Color.White;
+			iconButtonLogout.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			iconButtonLogout.IconSize = 30;
+			iconButtonLogout.ImageAlign = ContentAlignment.MiddleLeft;
+			iconButtonLogout.Location = new Point(0, 741);
+			iconButtonLogout.Name = "iconButtonLogout";
+			iconButtonLogout.Padding = new Padding(10, 0, 0, 0);
+			iconButtonLogout.Size = new Size(227, 48);
+			iconButtonLogout.TabIndex = 5;
+			iconButtonLogout.Tag = "Cài đặt";
+			iconButtonLogout.Text = "   Đăng Xuất";
+			iconButtonLogout.TextAlign = ContentAlignment.MiddleLeft;
+			iconButtonLogout.TextImageRelation = TextImageRelation.ImageBeforeText;
+			iconButtonLogout.UseVisualStyleBackColor = false;
+			iconButtonLogout.Click += iconButtonLogout_Click;
 			// 
 			// btnHome
 			// 
@@ -893,7 +894,7 @@
 		private System.Windows.Forms.Panel panelTitleBar;
 		private System.Windows.Forms.Panel panel5;
 		private System.Windows.Forms.Panel panel7;
-		private FontAwesome.Sharp.IconButton iconButton5;
+		private FontAwesome.Sharp.IconButton iconButtonLogout;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Timer timer;

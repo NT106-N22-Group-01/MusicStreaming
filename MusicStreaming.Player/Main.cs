@@ -278,6 +278,11 @@ namespace MusicStreaming.Player
 		#endregion
 
 		#region Control Button
+		private void iconButtonLogout_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
+
 		private void btnPlay_Click(object sender, EventArgs e)
 		{
 			if (isPlaying)
