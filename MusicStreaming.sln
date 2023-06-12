@@ -5,28 +5,42 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicStreaming.Auth", "MusicStreaming.Auth\MusicStreaming.Auth.csproj", "{01E48D14-7444-4199-A20B-9308FC038CC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStreaming.Player", "MusicStreaming.Player\MusicStreaming.Player.csproj", "{B6CE46A7-9D1B-4D88-9476-78E87605218C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicStreaming.Player", "MusicStreaming.Player\MusicStreaming.Player.csproj", "{B6CE46A7-9D1B-4D88-9476-78E87605218C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStreaming.Config", "MusicStreaming.Config\MusicStreaming.Config.csproj", "{2846AFD6-3EF1-4C32-A456-A7EC07FC7A83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicStreaming.Config", "MusicStreaming.Config\MusicStreaming.Config.csproj", "{2846AFD6-3EF1-4C32-A456-A7EC07FC7A83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{01E48D14-7444-4199-A20B-9308FC038CC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{01E48D14-7444-4199-A20B-9308FC038CC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01E48D14-7444-4199-A20B-9308FC038CC3}.Debug|x64.ActiveCfg = Debug|x64
+		{01E48D14-7444-4199-A20B-9308FC038CC3}.Debug|x64.Build.0 = Debug|x64
 		{01E48D14-7444-4199-A20B-9308FC038CC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01E48D14-7444-4199-A20B-9308FC038CC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01E48D14-7444-4199-A20B-9308FC038CC3}.Release|x64.ActiveCfg = Release|x64
+		{01E48D14-7444-4199-A20B-9308FC038CC3}.Release|x64.Build.0 = Release|x64
 		{B6CE46A7-9D1B-4D88-9476-78E87605218C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B6CE46A7-9D1B-4D88-9476-78E87605218C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6CE46A7-9D1B-4D88-9476-78E87605218C}.Debug|x64.ActiveCfg = Debug|x64
+		{B6CE46A7-9D1B-4D88-9476-78E87605218C}.Debug|x64.Build.0 = Debug|x64
 		{B6CE46A7-9D1B-4D88-9476-78E87605218C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6CE46A7-9D1B-4D88-9476-78E87605218C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6CE46A7-9D1B-4D88-9476-78E87605218C}.Release|x64.ActiveCfg = Release|x64
+		{B6CE46A7-9D1B-4D88-9476-78E87605218C}.Release|x64.Build.0 = Release|x64
 		{2846AFD6-3EF1-4C32-A456-A7EC07FC7A83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2846AFD6-3EF1-4C32-A456-A7EC07FC7A83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2846AFD6-3EF1-4C32-A456-A7EC07FC7A83}.Debug|x64.ActiveCfg = Debug|x64
+		{2846AFD6-3EF1-4C32-A456-A7EC07FC7A83}.Debug|x64.Build.0 = Debug|x64
 		{2846AFD6-3EF1-4C32-A456-A7EC07FC7A83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2846AFD6-3EF1-4C32-A456-A7EC07FC7A83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2846AFD6-3EF1-4C32-A456-A7EC07FC7A83}.Release|x64.ActiveCfg = Release|x64
+		{2846AFD6-3EF1-4C32-A456-A7EC07FC7A83}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
