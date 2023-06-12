@@ -70,7 +70,6 @@
 			lbMaxTime = new Label();
 			lbMinTime = new Label();
 			panel10 = new Panel();
-			homeView1 = new Player.View.HomeView();
 			btnShuffle = new RJCodeAdvance.RJControls.RJCircularPictureBox();
 			btbRepeat = new RJCodeAdvance.RJControls.RJCircularPictureBox();
 			buttonNext = new RJCodeAdvance.RJControls.RJCircularPictureBox();
@@ -595,7 +594,6 @@
 			// 
 			// panel10
 			// 
-			panel10.Controls.Add(homeView1);
 			panel10.Controls.Add(btnShuffle);
 			panel10.Controls.Add(btbRepeat);
 			panel10.Controls.Add(buttonNext);
@@ -607,14 +605,6 @@
 			panel10.Size = new Size(859, 72);
 			panel10.TabIndex = 0;
 			// 
-			// homeView1
-			// 
-			homeView1.BackColor = Color.FromArgb(27, 28, 34);
-			homeView1.Location = new Point(742, 40);
-			homeView1.Name = "homeView1";
-			homeView1.Size = new Size(8, 8);
-			homeView1.TabIndex = 26;
-			// 
 			// btnShuffle
 			// 
 			btnShuffle.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
@@ -624,7 +614,7 @@
 			btnShuffle.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
 			btnShuffle.BorderSize = 0;
 			btnShuffle.GradientAngle = 50F;
-			btnShuffle.Image = Player.Properties.Resources.icons8_shuffle_24px;
+			btnShuffle.Image = Properties.Resources.icons8_shuffle_24px;
 			btnShuffle.Location = new Point(304, 16);
 			btnShuffle.Name = "btnShuffle";
 			btnShuffle.Size = new Size(41, 41);
@@ -643,7 +633,7 @@
 			btbRepeat.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
 			btbRepeat.BorderSize = 0;
 			btbRepeat.GradientAngle = 50F;
-			btbRepeat.Image = Player.Properties.Resources.icons8_repeat_24px;
+			btbRepeat.Image = Properties.Resources.icons8_repeat_24px;
 			btbRepeat.Location = new Point(514, 16);
 			btbRepeat.Name = "btbRepeat";
 			btbRepeat.Size = new Size(41, 41);
@@ -661,7 +651,7 @@
 			buttonNext.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
 			buttonNext.BorderSize = 0;
 			buttonNext.GradientAngle = 50F;
-			buttonNext.Image = Player.Properties.Resources.icons8_end_32px;
+			buttonNext.Image = Properties.Resources.icons8_end_32px;
 			buttonNext.Location = new Point(467, 16);
 			buttonNext.Name = "buttonNext";
 			buttonNext.Size = new Size(41, 41);
@@ -679,7 +669,7 @@
 			buttonPrevious.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
 			buttonPrevious.BorderSize = 0;
 			buttonPrevious.GradientAngle = 50F;
-			buttonPrevious.Image = Player.Properties.Resources.icons8_skip_to_start_32px;
+			buttonPrevious.Image = Properties.Resources.icons8_skip_to_start_32px;
 			buttonPrevious.Location = new Point(351, 16);
 			buttonPrevious.Name = "buttonPrevious";
 			buttonPrevious.Size = new Size(41, 41);
@@ -697,7 +687,7 @@
 			btnPlay.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
 			btnPlay.BorderSize = 2;
 			btnPlay.GradientAngle = 50F;
-			btnPlay.Image = Player.Properties.Resources.icons8_play_32px_7;
+			btnPlay.Image = Properties.Resources.icons8_play_32px_7;
 			btnPlay.Location = new Point(404, 11);
 			btnPlay.Name = "btnPlay";
 			btnPlay.Size = new Size(51, 51);
@@ -953,7 +943,6 @@
 		private ColumnHeader columnSongView;
 		private ColumnHeader columnSongFormat;
 		private ColumnHeader columnAlbum;
-		private Player.View.HomeView homeView1;
 		private Label labelArtistAlbum;
 		private Label labelTrackName;
 	}

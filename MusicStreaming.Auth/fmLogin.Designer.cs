@@ -38,8 +38,6 @@
 			label3 = new Label();
 			linktoRegister = new LinkLabel();
 			showpwd = new CheckBox();
-			pictureBox1 = new PictureBox();
-			((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
 			SuspendLayout();
 			// 
 			// label4
@@ -152,23 +150,12 @@
 			showpwd.UseVisualStyleBackColor = true;
 			showpwd.CheckedChanged += showpwd_CheckedChanged;
 			// 
-			// pictureBox1
-			// 
-			pictureBox1.Image = Properties.Resources.logo;
-			pictureBox1.Location = new Point(12, 12);
-			pictureBox1.Name = "pictureBox1";
-			pictureBox1.Size = new Size(113, 110);
-			pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-			pictureBox1.TabIndex = 25;
-			pictureBox1.TabStop = false;
-			// 
 			// fmLogin
 			// 
 			AutoScaleDimensions = new SizeF(10F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ActiveCaption;
 			ClientSize = new Size(663, 535);
-			Controls.Add(pictureBox1);
 			Controls.Add(showpwd);
 			Controls.Add(linktoRegister);
 			Controls.Add(label3);
@@ -182,7 +169,6 @@
 			Margin = new Padding(4, 5, 4, 5);
 			Name = "fmLogin";
 			Text = "Music Streaming";
-			((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -199,6 +185,5 @@
 		private Label label3;
 		private LinkLabel linktoRegister;
 		private CheckBox showpwd;
-		private PictureBox pictureBox1;
 	}
 }

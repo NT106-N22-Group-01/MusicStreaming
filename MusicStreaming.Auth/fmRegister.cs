@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace MusicStreaming.Auth
 {
@@ -39,7 +39,7 @@ namespace MusicStreaming.Auth
 				password
 			};
 
-			string json = JsonSerializer.Serialize(registerRequest);
+			string json = JsonConvert.SerializeObject(registerRequest);
 			var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 			try
@@ -48,8 +48,15 @@ namespace MusicStreaming.Auth
 
 				if (response.IsSuccessStatusCode)
 				{
-					string token = await response.Content.ReadAsStringAsync();
-					MessageBox.Show("Registration successful!");
+					var responeContent = await response.Content.ReadAsStringAsync();
+
+					var responseObj = JsonConvert.DeserializeObject<dynamic>(responeContent);
+
+					string tokenValue = responseObj.token;
+
+					var MainForm = new Player.Main(tokenValue);
+					this.Hide();
+					MainForm.Show();
 				}
 				else
 				{

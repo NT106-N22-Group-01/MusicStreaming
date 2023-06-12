@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MusicStreaming.Config\MusicStreaming.Config.csproj" />
+    <ProjectReference Include="..\MusicStreaming.Player\MusicStreaming.Player.csproj" />
   </ItemGroup>
 
 </Project>

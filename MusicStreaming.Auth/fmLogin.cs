@@ -1,5 +1,5 @@
-﻿using System.Text;
-using System.Text.Json;
+﻿using Newtonsoft.Json;
+using System.Text;
 
 namespace MusicStreaming.Auth
 {
@@ -28,7 +28,7 @@ namespace MusicStreaming.Auth
 				password
 			};
 
-			var json = JsonSerializer.Serialize(loginRequest);
+			var json = JsonConvert.SerializeObject(loginRequest);
 			var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 			try
@@ -36,12 +36,19 @@ namespace MusicStreaming.Auth
 				var response = await httpClient.PostAsync($"{Config.Config.ApiBaseUrl}/v1/login/token/", content);
 				if (response.IsSuccessStatusCode)
 				{
-					string token = await response.Content.ReadAsStringAsync();
-					MessageBox.Show("Login successful!");
+					var responeContent = await response.Content.ReadAsStringAsync();
+
+					var responseObj = JsonConvert.DeserializeObject<dynamic>(responeContent);
+
+					string tokenValue = responseObj.token;
+
+					var MainForm = new Player.Main(tokenValue);
+					this.Hide();
+					MainForm.Show();
 				}
 				else
 				{
-					var form = new MusicStreaming.Player.Main()
+					MessageBox.Show("Login failed. Please check your credentials.");
 				}
 			}
 			catch (Exception ex)
