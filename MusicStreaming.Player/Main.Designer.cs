@@ -84,7 +84,7 @@
 			pbSong = new PictureBox();
 			tableLayoutPanel1 = new TableLayoutPanel();
 			panel3 = new Panel();
-			rjTextBox1 = new RJCodeAdvance.RJControls.RJTextBox();
+			rjTextBoxQuery = new RJCodeAdvance.RJControls.RJTextBox();
 			iconButton1 = new FontAwesome.Sharp.IconButton();
 			panel4 = new Panel();
 			panelMenu.SuspendLayout();
@@ -796,35 +796,36 @@
 			// 
 			// panel3
 			// 
-			panel3.Controls.Add(rjTextBox1);
+			panel3.Controls.Add(rjTextBoxQuery);
 			panel3.Controls.Add(iconButton1);
 			panel3.Location = new Point(43, 17);
 			panel3.Name = "panel3";
 			panel3.Size = new Size(482, 38);
 			panel3.TabIndex = 1;
 			// 
-			// rjTextBox1
+			// rjTextBoxQuery
 			// 
-			rjTextBox1.BackColor = Color.FromArgb(33, 38, 69);
-			rjTextBox1.BorderColor = Color.FromArgb(33, 38, 69);
-			rjTextBox1.BorderFocusColor = Color.HotPink;
-			rjTextBox1.BorderRadius = 0;
-			rjTextBox1.BorderSize = 2;
-			rjTextBox1.Dock = DockStyle.Fill;
-			rjTextBox1.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point);
-			rjTextBox1.ForeColor = Color.White;
-			rjTextBox1.Location = new Point(35, 0);
-			rjTextBox1.Margin = new Padding(4);
-			rjTextBox1.Multiline = false;
-			rjTextBox1.Name = "rjTextBox1";
-			rjTextBox1.Padding = new Padding(10, 7, 10, 7);
-			rjTextBox1.PasswordChar = false;
-			rjTextBox1.PlaceholderColor = Color.DarkGray;
-			rjTextBox1.PlaceholderText = "";
-			rjTextBox1.Size = new Size(447, 36);
-			rjTextBox1.TabIndex = 1;
-			rjTextBox1.Texts = "";
-			rjTextBox1.UnderlinedStyle = false;
+			rjTextBoxQuery.BackColor = Color.FromArgb(33, 38, 69);
+			rjTextBoxQuery.BorderColor = Color.FromArgb(33, 38, 69);
+			rjTextBoxQuery.BorderFocusColor = Color.HotPink;
+			rjTextBoxQuery.BorderRadius = 0;
+			rjTextBoxQuery.BorderSize = 2;
+			rjTextBoxQuery.Dock = DockStyle.Fill;
+			rjTextBoxQuery.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point);
+			rjTextBoxQuery.ForeColor = Color.White;
+			rjTextBoxQuery.Location = new Point(35, 0);
+			rjTextBoxQuery.Margin = new Padding(4);
+			rjTextBoxQuery.Multiline = false;
+			rjTextBoxQuery.Name = "rjTextBoxQuery";
+			rjTextBoxQuery.Padding = new Padding(10, 7, 10, 7);
+			rjTextBoxQuery.PasswordChar = false;
+			rjTextBoxQuery.PlaceholderColor = Color.DarkGray;
+			rjTextBoxQuery.PlaceholderText = "";
+			rjTextBoxQuery.Size = new Size(447, 36);
+			rjTextBoxQuery.TabIndex = 1;
+			rjTextBoxQuery.Texts = "";
+			rjTextBoxQuery.UnderlinedStyle = false;
+			rjTextBoxQuery.KeyPress += rjTextBoxQuery_KeyPress;
 			// 
 			// iconButton1
 			// 
@@ -934,7 +935,7 @@
 		private FontAwesome.Sharp.IconButton iconButton4;
 		private FontAwesome.Sharp.IconButton iconButton3;
 		private Panel panel3;
-		private RJCodeAdvance.RJControls.RJTextBox rjTextBox1;
+		private RJCodeAdvance.RJControls.RJTextBox rjTextBoxQuery;
 		private FontAwesome.Sharp.IconButton iconButton1;
 		private Panel panel4;
 		private ListView listViewAlbum;

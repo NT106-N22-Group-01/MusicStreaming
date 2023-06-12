@@ -220,6 +220,17 @@ namespace MusicStreaming
 			await PopulateAlbumName();
 			await PopulateSong();
 		}
+
+		private async void rjTextBoxQuery_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == (char)Keys.Enter)
+			{
+				await PopulateModels(rjTextBoxQuery.Texts);
+				await PopulateArtistNames();
+				await PopulateAlbumName();
+				await PopulateSong();
+			}
+		}
 		#endregion
 
 		#region Trackbar Control
