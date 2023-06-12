@@ -73,8 +73,8 @@
 			homeView1 = new Player.View.HomeView();
 			btnShuffle = new RJCodeAdvance.RJControls.RJCircularPictureBox();
 			btbRepeat = new RJCodeAdvance.RJControls.RJCircularPictureBox();
-			rjCircularPictureBox3 = new RJCodeAdvance.RJControls.RJCircularPictureBox();
-			rjCircularPictureBox2 = new RJCodeAdvance.RJControls.RJCircularPictureBox();
+			buttonNext = new RJCodeAdvance.RJControls.RJCircularPictureBox();
+			buttonPrevious = new RJCodeAdvance.RJControls.RJCircularPictureBox();
 			btnPlay = new RJCodeAdvance.RJControls.RJCircularPictureBox();
 			panel1 = new Panel();
 			labelArtistAlbum = new Label();
@@ -97,8 +97,8 @@
 			panel10.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)btnShuffle).BeginInit();
 			((System.ComponentModel.ISupportInitialize)btbRepeat).BeginInit();
-			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox3).BeginInit();
-			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox2).BeginInit();
+			((System.ComponentModel.ISupportInitialize)buttonNext).BeginInit();
+			((System.ComponentModel.ISupportInitialize)buttonPrevious).BeginInit();
 			((System.ComponentModel.ISupportInitialize)btnPlay).BeginInit();
 			panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pbSong).BeginInit();
@@ -598,8 +598,8 @@
 			panel10.Controls.Add(homeView1);
 			panel10.Controls.Add(btnShuffle);
 			panel10.Controls.Add(btbRepeat);
-			panel10.Controls.Add(rjCircularPictureBox3);
-			panel10.Controls.Add(rjCircularPictureBox2);
+			panel10.Controls.Add(buttonNext);
+			panel10.Controls.Add(buttonPrevious);
 			panel10.Controls.Add(btnPlay);
 			panel10.Dock = DockStyle.Top;
 			panel10.Location = new Point(0, 0);
@@ -652,39 +652,41 @@
 			btbRepeat.TabStop = false;
 			btbRepeat.Click += btbRepeat_Click;
 			// 
-			// rjCircularPictureBox3
+			// buttonNext
 			// 
-			rjCircularPictureBox3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-			rjCircularPictureBox3.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
-			rjCircularPictureBox3.BorderColor = Color.RoyalBlue;
-			rjCircularPictureBox3.BorderColor2 = Color.HotPink;
-			rjCircularPictureBox3.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-			rjCircularPictureBox3.BorderSize = 0;
-			rjCircularPictureBox3.GradientAngle = 50F;
-			rjCircularPictureBox3.Image = Player.Properties.Resources.icons8_end_32px;
-			rjCircularPictureBox3.Location = new Point(467, 16);
-			rjCircularPictureBox3.Name = "rjCircularPictureBox3";
-			rjCircularPictureBox3.Size = new Size(41, 41);
-			rjCircularPictureBox3.SizeMode = PictureBoxSizeMode.CenterImage;
-			rjCircularPictureBox3.TabIndex = 23;
-			rjCircularPictureBox3.TabStop = false;
+			buttonNext.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+			buttonNext.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
+			buttonNext.BorderColor = Color.RoyalBlue;
+			buttonNext.BorderColor2 = Color.HotPink;
+			buttonNext.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+			buttonNext.BorderSize = 0;
+			buttonNext.GradientAngle = 50F;
+			buttonNext.Image = Player.Properties.Resources.icons8_end_32px;
+			buttonNext.Location = new Point(467, 16);
+			buttonNext.Name = "buttonNext";
+			buttonNext.Size = new Size(41, 41);
+			buttonNext.SizeMode = PictureBoxSizeMode.CenterImage;
+			buttonNext.TabIndex = 23;
+			buttonNext.TabStop = false;
+			buttonNext.Click += buttonNext_Click;
 			// 
-			// rjCircularPictureBox2
+			// buttonPrevious
 			// 
-			rjCircularPictureBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-			rjCircularPictureBox2.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
-			rjCircularPictureBox2.BorderColor = Color.RoyalBlue;
-			rjCircularPictureBox2.BorderColor2 = Color.HotPink;
-			rjCircularPictureBox2.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-			rjCircularPictureBox2.BorderSize = 0;
-			rjCircularPictureBox2.GradientAngle = 50F;
-			rjCircularPictureBox2.Image = Player.Properties.Resources.icons8_skip_to_start_32px;
-			rjCircularPictureBox2.Location = new Point(351, 16);
-			rjCircularPictureBox2.Name = "rjCircularPictureBox2";
-			rjCircularPictureBox2.Size = new Size(41, 41);
-			rjCircularPictureBox2.SizeMode = PictureBoxSizeMode.CenterImage;
-			rjCircularPictureBox2.TabIndex = 22;
-			rjCircularPictureBox2.TabStop = false;
+			buttonPrevious.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+			buttonPrevious.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
+			buttonPrevious.BorderColor = Color.RoyalBlue;
+			buttonPrevious.BorderColor2 = Color.HotPink;
+			buttonPrevious.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+			buttonPrevious.BorderSize = 0;
+			buttonPrevious.GradientAngle = 50F;
+			buttonPrevious.Image = Player.Properties.Resources.icons8_skip_to_start_32px;
+			buttonPrevious.Location = new Point(351, 16);
+			buttonPrevious.Name = "buttonPrevious";
+			buttonPrevious.Size = new Size(41, 41);
+			buttonPrevious.SizeMode = PictureBoxSizeMode.CenterImage;
+			buttonPrevious.TabIndex = 22;
+			buttonPrevious.TabStop = false;
+			buttonPrevious.Click += buttonPrevious_Click;
 			// 
 			// btnPlay
 			// 
@@ -883,8 +885,8 @@
 			panel10.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)btnShuffle).EndInit();
 			((System.ComponentModel.ISupportInitialize)btbRepeat).EndInit();
-			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox3).EndInit();
-			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox2).EndInit();
+			((System.ComponentModel.ISupportInitialize)buttonNext).EndInit();
+			((System.ComponentModel.ISupportInitialize)buttonPrevious).EndInit();
 			((System.ComponentModel.ISupportInitialize)btnPlay).EndInit();
 			panel1.ResumeLayout(false);
 			panel1.PerformLayout();
@@ -921,8 +923,8 @@
 		private System.Windows.Forms.Panel panel10;
 		private RJCodeAdvance.RJControls.RJCircularPictureBox btnShuffle;
 		private RJCodeAdvance.RJControls.RJCircularPictureBox btbRepeat;
-		private RJCodeAdvance.RJControls.RJCircularPictureBox rjCircularPictureBox3;
-		private RJCodeAdvance.RJControls.RJCircularPictureBox rjCircularPictureBox2;
+		private RJCodeAdvance.RJControls.RJCircularPictureBox buttonNext;
+		private RJCodeAdvance.RJControls.RJCircularPictureBox buttonPrevious;
 		private RJCodeAdvance.RJControls.RJCircularPictureBox btnPlay;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Label lbSongArtist;

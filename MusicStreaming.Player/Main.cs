@@ -21,8 +21,9 @@ namespace MusicStreaming
 		private int? selectedAlbumID;
 		private Random rng;
 
-		public MpvPlayer mpvPlayer;
+		public MpvPlayer mpvPlayer = new MpvPlayer();
 		private SongQueryModel currentSong;
+		private int currentShuffledSongIndex = 0;
 		private bool isPlaying = false;
 		private bool isMute = false;
 		private bool isRepeat = false;
@@ -319,6 +320,25 @@ namespace MusicStreaming
 			}
 		}
 
+		private void buttonNext_Click(object sender, EventArgs e)
+		{
+
+			currentSong = GetNextSong();
+			if (currentSong != null)
+			{
+				Play(currentSong);
+			}
+		}
+
+		private void buttonPrevious_Click(object sender, EventArgs e)
+		{
+			currentSong = GetPreviousSong();
+			if (currentSong != null)
+			{
+				Play(currentSong);
+			}
+		}
+
 		private void pbSong_Click(object sender, EventArgs e)
 		{
 			PictureBox clickedPictureBox = (PictureBox)sender;
@@ -550,10 +570,38 @@ namespace MusicStreaming
 
 		private SongQueryModel GetNextSong()
 		{
-			int currentIndex = songs.FindIndex(song => song.Id == currentSong.Id);
-			int nextIndex = (currentIndex + 1) % songs.Count;
-			var nextSong = songs[nextIndex];
-			return nextSong;
+			if (currentSong == null)
+				return null;
+			if (isShuffle && shuffledSongs.Count > 0)
+			{
+				currentShuffledSongIndex = (currentShuffledSongIndex + 1) % shuffledSongs.Count;
+				return shuffledSongs[currentShuffledSongIndex];
+			}
+			else
+			{
+				int currentIndex = songs.FindIndex(song => song.Id == currentSong.Id);
+				int nextIndex = (currentIndex + 1) % songs.Count;
+				var nextSong = songs[nextIndex];
+				return nextSong;
+			}
+		}
+
+		private SongQueryModel GetPreviousSong()
+		{
+			if (currentSong == null)
+				return null;
+			if (isShuffle && shuffledSongs.Count > 0)
+			{
+				currentShuffledSongIndex = (currentShuffledSongIndex - 1) % shuffledSongs.Count;
+				return shuffledSongs[currentShuffledSongIndex];
+			}
+			else
+			{
+				int currentIndex = songs.FindIndex(song => song.Id == currentSong.Id);
+				int previousIndex = (currentIndex - 1) % songs.Count;
+				var nextSong = songs[previousIndex];
+				return nextSong;
+			}
 		}
 
 		private Image GetImageWithHeaders(string imageUrl, string bearerToken)
@@ -595,19 +643,14 @@ namespace MusicStreaming
 			{
 				Play(currentSong);
 			}
-			else if (isShuffle)
-			{
-				SongQueryModel nextSong = shuffledSongs[0];
-				shuffledSongs.RemoveAt(0);
-				currentSong = nextSong;
-				Play(currentSong);
-			}
 			else
 			{
 				currentSong = GetNextSong();
-				Play(currentSong);
+				if (currentSong != null)
+				{
+					Play(currentSong);
+				}
 			}
-
 		}
 
 		private void PositionTimer_Tick(object sender, EventArgs e)
@@ -624,7 +667,6 @@ namespace MusicStreaming
 		{
 			Stop();
 
-			mpvPlayer = new MpvPlayer();
 			mpvPlayer.API.SetPropertyString("http-header-fields", $"Authorization:  Bearer {token}");
 			mpvPlayer.API.SetPropertyString("audio-display", "no");
 			mpvPlayer.API.SetPropertyString("video", "no");
