@@ -62,7 +62,7 @@
 			listViewArtist = new ListView();
 			columnArtist = new ColumnHeader();
 			panel12 = new Panel();
-			iconButton2 = new FontAwesome.Sharp.IconButton();
+			iconButtonMute = new FontAwesome.Sharp.IconButton();
 			trackbarVolume = new ReaLTaiizor.Controls.HopeTrackBar();
 			panel8 = new Panel();
 			panel11 = new Panel();
@@ -364,12 +364,14 @@
 			listViewSongs.Columns.AddRange(new ColumnHeader[] { columnNo, columnSongName, columnSongArtist, columnSongAlbum, columnSongDuration, columnSongView, columnSongFormat });
 			listViewSongs.Font = new Font("Open Sans", 10F, FontStyle.Bold, GraphicsUnit.Point);
 			listViewSongs.ForeColor = Color.White;
+			listViewSongs.FullRowSelect = true;
 			listViewSongs.Location = new Point(35, 364);
 			listViewSongs.Name = "listViewSongs";
 			listViewSongs.Size = new Size(1166, 304);
 			listViewSongs.TabIndex = 4;
 			listViewSongs.UseCompatibleStateImageBehavior = false;
 			listViewSongs.View = View.Details;
+			listViewSongs.MouseDoubleClick += listViewSongs_MouseDoubleClick;
 			// 
 			// columnNo
 			// 
@@ -470,7 +472,7 @@
 			// 
 			// panel12
 			// 
-			panel12.Controls.Add(iconButton2);
+			panel12.Controls.Add(iconButtonMute);
 			panel12.Controls.Add(trackbarVolume);
 			panel12.Dock = DockStyle.Fill;
 			panel12.Location = new Point(1177, 3);
@@ -478,20 +480,21 @@
 			panel12.Size = new Size(315, 104);
 			panel12.TabIndex = 2;
 			// 
-			// iconButton2
+			// iconButtonMute
 			// 
-			iconButton2.BackColor = Color.FromArgb(15, 15, 16);
-			iconButton2.FlatAppearance.BorderSize = 0;
-			iconButton2.FlatStyle = FlatStyle.Flat;
-			iconButton2.IconChar = FontAwesome.Sharp.IconChar.VolumeHigh;
-			iconButton2.IconColor = Color.White;
-			iconButton2.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			iconButton2.IconSize = 32;
-			iconButton2.Location = new Point(12, 17);
-			iconButton2.Name = "iconButton2";
-			iconButton2.Size = new Size(38, 40);
-			iconButton2.TabIndex = 4;
-			iconButton2.UseVisualStyleBackColor = false;
+			iconButtonMute.BackColor = Color.FromArgb(15, 15, 16);
+			iconButtonMute.FlatAppearance.BorderSize = 0;
+			iconButtonMute.FlatStyle = FlatStyle.Flat;
+			iconButtonMute.IconChar = FontAwesome.Sharp.IconChar.VolumeHigh;
+			iconButtonMute.IconColor = Color.White;
+			iconButtonMute.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			iconButtonMute.IconSize = 32;
+			iconButtonMute.Location = new Point(12, 17);
+			iconButtonMute.Name = "iconButtonMute";
+			iconButtonMute.Size = new Size(38, 40);
+			iconButtonMute.TabIndex = 4;
+			iconButtonMute.UseVisualStyleBackColor = false;
+			iconButtonMute.Click += iconButtonMute_Click;
 			// 
 			// trackbarVolume
 			// 
@@ -502,7 +505,7 @@
 			trackbarVolume.BaseColor = Color.FromArgb(15, 15, 16);
 			trackbarVolume.Cursor = Cursors.Hand;
 			trackbarVolume.FillBarColor = Color.HotPink;
-			trackbarVolume.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
+			trackbarVolume.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
 			trackbarVolume.ForeColor = Color.White;
 			trackbarVolume.HeadBorderColor = Color.HotPink;
 			trackbarVolume.HeadColor = Color.Black;
@@ -511,13 +514,12 @@
 			trackbarVolume.MinValue = 0;
 			trackbarVolume.Name = "trackbarVolume";
 			trackbarVolume.ShowValue = false;
-			trackbarVolume.Size = new Size(120, 16);
+			trackbarVolume.Size = new Size(124, 16);
 			trackbarVolume.TabIndex = 3;
-			trackbarVolume.Text = "hopeTrackBar1";
+			trackbarVolume.Text = "hopeTrackBarVolume";
 			trackbarVolume.ThemeColor = Color.FromArgb(64, 158, 255);
 			trackbarVolume.UnknownColor = Color.White;
-			trackbarVolume.Value = 50;
-			trackbarVolume.Click += trackbarVolume_Click;
+			trackbarVolume.Value = 100;
 			trackbarVolume.MouseMove += trackbarVolume_MouseMove;
 			trackbarVolume.MouseUp += trackbarVolume_MouseUp;
 			// 
@@ -567,8 +569,6 @@
 			trackBar.ThemeColor = Color.FromArgb(64, 158, 255);
 			trackBar.UnknownColor = Color.White;
 			trackBar.Value = 0;
-			trackBar.MouseMove += trackBar_MouseMove;
-			trackBar.MouseUp += trackBar_MouseUp;
 			// 
 			// lbMaxTime
 			// 
@@ -829,6 +829,7 @@
 			Name = "Main";
 			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Music Streaming";
+			FormClosing += Main_FormClosing;
 			Load += Main_Load;
 			Resize += Main_Resize;
 			panelMenu.ResumeLayout(false);
@@ -872,7 +873,7 @@
 		private FontAwesome.Sharp.IconButton btnMax;
 		private FontAwesome.Sharp.IconButton btnExit;
 		private System.Windows.Forms.Panel panel12;
-		private FontAwesome.Sharp.IconButton iconButton2;
+		private FontAwesome.Sharp.IconButton iconButtonMute;
 		private ReaLTaiizor.Controls.HopeTrackBar trackbarVolume;
 		private System.Windows.Forms.Panel panel8;
 		private System.Windows.Forms.Panel panel11;

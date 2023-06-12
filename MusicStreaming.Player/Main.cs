@@ -2,10 +2,13 @@
 using System.Runtime.InteropServices;
 using MusicStreaming.Player.Model;
 using MusicStreaming.Config;
+using MusicStreaming.Player.mpvWrapper;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using MusicStreaming.Player;
-using System.Diagnostics;
+using System.Numerics;
+using System.Net;
+using System.Windows.Forms;
 
 namespace MusicStreaming
 {
@@ -13,17 +16,22 @@ namespace MusicStreaming
 	{
 		private int borderSize = 2;
 		private Size formSize;
+
 		List<SongQueryModel> songs;
 		Dictionary<int, ArtistModel> artists = new Dictionary<int, ArtistModel>();
 		Dictionary<int, AlbumModel> albums = new Dictionary<int, AlbumModel>();
 		int? SelectedArtistID;
 		int? SelectedAlbumID;
-		private Process ffplayProcess;
+
+		private mpvWrapper mpvWrapper;
+		private bool IsPlaying = false;
+		private bool IsMute = false;
 
 		public Main(string Token)
 		{
 			InitializeComponent();
 			TokenManager.AccessToken = Token;
+			mpvWrapper = new mpvWrapper();
 		}
 
 		//Drag Form
@@ -168,24 +176,12 @@ namespace MusicStreaming
 			btn.BackColor = Color.FromArgb(255, 128, 0);
 		}
 
-		private void btnPlay_Click(object sender, EventArgs e)
-		{
-		}
-
 		private bool barChange = true;
 		private void timer1_Tick(object sender, EventArgs e)
 		{
 		}
 
 		private void btnOpen_Click(object sender, EventArgs e)
-		{
-		}
-
-		private void trackBar_MouseUp(object sender, MouseEventArgs e)
-		{
-		}
-
-		private void trackBar_MouseMove(object sender, MouseEventArgs e)
 		{
 		}
 
@@ -215,16 +211,22 @@ namespace MusicStreaming
 
 		private void trackbarVolume_MouseUp(object sender, MouseEventArgs e)
 		{
+			int trackBarWidth = trackbarVolume.Width - 20;
+			int newVolume = 100 * e.X / trackBarWidth;
 
+			// Ensure the new volume is within the valid range of 0 to 100
+			newVolume = Math.Max(0, Math.Min(100, newVolume));
+
+			trackbarVolume.Value = newVolume;
+			mpvWrapper.SetVolume(trackbarVolume.Value);
 		}
 
 		private void trackbarVolume_MouseMove(object sender, MouseEventArgs e)
 		{
-
-		}
-
-		private void trackbarVolume_Click(object sender, EventArgs e)
-		{
+			if (e.Button == MouseButtons.Left)
+			{
+				mpvWrapper.SetVolume(trackbarVolume.Value);
+			}
 		}
 
 		private void panel1_Click(object sender, EventArgs e)
@@ -384,6 +386,67 @@ namespace MusicStreaming
 				SelectedAlbumID = selectedAlbum.Id;
 				await PopulateSong(SelectedArtistID, SelectedAlbumID);
 			}
+		}
+
+		private void listViewSongs_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (listViewSongs.SelectedItems.Count > 0)
+			{
+				ListViewItem selectedItem = listViewSongs.SelectedItems[0];
+
+				SongQueryModel song = (SongQueryModel)selectedItem.Tag;
+
+				var songURL = $"{Config.Config.ApiBaseUrl}/v1/file/{song.Id}";
+				mpvWrapper.Play(songURL, trackbarVolume.Value, TokenManager.AccessToken);
+				IsPlaying = true;
+				var imageURL = $"{Config.Config.ApiBaseUrl}/v1/album/{song.album_id}/artwork";
+				LoadImageWithHeaders(imageURL, TokenManager.AccessToken);
+			}
+		}
+
+		private void LoadImageWithHeaders(string imageUrl, string bearerToken)
+		{
+			using (WebClient client = new WebClient())
+			{
+				client.Headers.Add("Authorization", $"Bearer {bearerToken}");
+
+				byte[] imageData = client.DownloadData(imageUrl);
+
+				string tempFilePath = System.IO.Path.GetTempFileName();
+				System.IO.File.WriteAllBytes(tempFilePath, imageData);
+
+				pbSong.ImageLocation = tempFilePath;
+			}
+		}
+
+		private void Main_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			mpvWrapper.Stop();
+		}
+
+		private void btnPlay_Click(object sender, EventArgs e)
+		{
+			if (IsPlaying)
+			{
+				mpvWrapper.TogglePauseResume();
+			}
+		}
+
+		private void iconButtonMute_Click(object sender, EventArgs e)
+		{
+			if (IsMute == false)
+			{
+				mpvWrapper.SetMute(true);
+				iconButtonMute.IconChar = FontAwesome.Sharp.IconChar.VolumeMute;
+				IsMute = true;
+			}
+			else
+			{
+				mpvWrapper.SetMute(false);
+				iconButtonMute.IconChar = FontAwesome.Sharp.IconChar.VolumeHigh;
+				IsMute = false;
+			}
+
 		}
 	}
 }
