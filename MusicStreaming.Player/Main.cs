@@ -11,20 +11,22 @@ namespace MusicStreaming
 	public partial class Main : Form
 	{
 		private int borderSize = 2;
-		private Size formSize;
+		private Size initialFormSize;
 
-		List<SongQueryModel> songs;
-		Dictionary<int, ArtistModel> artists = new Dictionary<int, ArtistModel>();
-		Dictionary<int, AlbumModel> albums = new Dictionary<int, AlbumModel>();
-		int? SelectedArtistID;
-		int? SelectedAlbumID;
+		private List<SongQueryModel> songs;
+		private List<SongQueryModel> shuffledSongs;
+		private Dictionary<int, ArtistModel> artists = new Dictionary<int, ArtistModel>();
+		private Dictionary<int, AlbumModel> albums = new Dictionary<int, AlbumModel>();
+		private int? selectedArtistID;
+		private int? selectedAlbumID;
+		private Random rng;
 
 		public MpvPlayer mpvPlayer;
-		private SongQueryModel CurrentSong;
-		private bool IsPlaying = false;
-		private bool IsMute = false;
-		private bool IsRepeat = false;
-		private bool IsShuffle = false;
+		private SongQueryModel currentSong;
+		private bool isPlaying = false;
+		private bool isMute = false;
+		private bool isRepeat = false;
+		private bool isShuffle = false;
 
 		public Main(string Token)
 		{
@@ -119,9 +121,9 @@ namespace MusicStreaming
 				/// wParam value by using the bitwise AND operator.
 				int wParam = (m.WParam.ToInt32() & 0xFFF0);
 				if (wParam == SC_MINIMIZE)  //Before
-					formSize = this.ClientSize;
+					initialFormSize = this.ClientSize;
 				if (wParam == SC_RESTORE)// Restored form(Before)
-					this.Size = formSize;
+					this.Size = initialFormSize;
 			}
 			base.WndProc(ref m);
 		}
@@ -154,19 +156,19 @@ namespace MusicStreaming
 		{
 			if (this.WindowState == FormWindowState.Normal)
 			{
-				formSize = this.ClientSize;
+				initialFormSize = this.ClientSize;
 				this.WindowState = FormWindowState.Maximized;
 			}
 			else
 			{
 				this.WindowState = FormWindowState.Normal;
-				this.Size = formSize;
+				this.Size = initialFormSize;
 			}
 		}
 
 		private void btnMin_Click(object sender, EventArgs e)
 		{
-			formSize = Size;
+			initialFormSize = Size;
 			this.WindowState = FormWindowState.Minimized;
 		}
 		#endregion
@@ -222,7 +224,7 @@ namespace MusicStreaming
 		#region Trackbar Control
 		private void trackBar_MouseMove(object sender, MouseEventArgs e)
 		{
-			if (e.Button == MouseButtons.Left && IsPlaying)
+			if (e.Button == MouseButtons.Left && isPlaying)
 			{
 				var pos = TimeSpan.FromMilliseconds(trackBar.Value);
 				mpvPlayer.SeekAsync(pos);
@@ -266,7 +268,7 @@ namespace MusicStreaming
 		#region Control Button
 		private void btnPlay_Click(object sender, EventArgs e)
 		{
-			if (IsPlaying)
+			if (isPlaying)
 			{
 				TogglePauseResume();
 			}
@@ -274,45 +276,46 @@ namespace MusicStreaming
 
 		private void iconButtonMute_Click(object sender, EventArgs e)
 		{
-			if (IsMute == false)
+			if (isMute == false)
 			{
 				SetMute(true);
 				iconButtonMute.IconChar = FontAwesome.Sharp.IconChar.VolumeMute;
-				IsMute = true;
+				isMute = true;
 			}
 			else
 			{
 				SetMute(false);
 				iconButtonMute.IconChar = FontAwesome.Sharp.IconChar.VolumeHigh;
-				IsMute = false;
+				isMute = false;
 			}
 		}
 
 		private void btbRepeat_Click(object sender, EventArgs e)
 		{
-			if (IsRepeat == false)
+			if (isRepeat == false)
 			{
 				btbRepeat.BackColor = Color.MediumVioletRed;
-				IsRepeat = true;
+				isRepeat = true;
 			}
 			else
 			{
 				btbRepeat.BackColor = Color.Black;
-				IsRepeat = false;
+				isRepeat = false;
 			}
 		}
 
 		private void btnShuffle_Click(object sender, EventArgs e)
 		{
-			if (IsShuffle == false)
+			if (isShuffle == false)
 			{
+				ShufflePlaylist();
 				btnShuffle.BackColor = Color.MediumVioletRed;
-				IsShuffle = true;
+				isShuffle = true;
 			}
 			else
 			{
 				btnShuffle.BackColor = Color.Black;
-				IsShuffle = false;
+				isShuffle = false;
 			}
 		}
 
@@ -326,7 +329,7 @@ namespace MusicStreaming
 			pictureBox.Dock = DockStyle.Fill;
 			pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 			pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-			var imageURL = $"{Config.Config.ApiBaseUrl}/v1/album/{CurrentSong.album_id}/artwork";
+			var imageURL = $"{Config.Config.ApiBaseUrl}/v1/album/{currentSong.album_id}/artwork";
 			pictureBox.Image = GetImageWithHeaders(imageURL, TokenManager.AccessToken);
 
 			floatingPanelForm.ClientSize = pictureBox.Image.Size;
@@ -345,16 +348,16 @@ namespace MusicStreaming
 			}
 			if (listViewArtist.SelectedItems[0].Text == "All")
 			{
-				SelectedArtistID = null;
+				selectedArtistID = null;
 				await PopulateAlbumName();
 				await PopulateSong();
 			}
 			else
 			{
 				ArtistModel selectedArtist = (ArtistModel)listViewArtist.SelectedItems[0].Tag;
-				SelectedArtistID = selectedArtist.Id;
-				await PopulateAlbumName(SelectedArtistID);
-				await PopulateSong(SelectedArtistID);
+				selectedArtistID = selectedArtist.Id;
+				await PopulateAlbumName(selectedArtistID);
+				await PopulateSong(selectedArtistID);
 			}
 		}
 
@@ -366,14 +369,14 @@ namespace MusicStreaming
 			}
 			if (listViewAlbum.SelectedItems[0].Text == "All")
 			{
-				SelectedAlbumID = null;
-				await PopulateSong(SelectedArtistID);
+				selectedAlbumID = null;
+				await PopulateSong(selectedArtistID);
 			}
 			else
 			{
 				AlbumModel selectedAlbum = (AlbumModel)listViewAlbum.SelectedItems[0].Tag;
-				SelectedAlbumID = selectedAlbum.Id;
-				await PopulateSong(SelectedArtistID, SelectedAlbumID);
+				selectedAlbumID = selectedAlbum.Id;
+				await PopulateSong(selectedArtistID, selectedAlbumID);
 			}
 		}
 
@@ -384,7 +387,7 @@ namespace MusicStreaming
 				ListViewItem selectedItem = listViewSongs.SelectedItems[0];
 
 				SongQueryModel song = (SongQueryModel)selectedItem.Tag;
-				CurrentSong = song;
+				currentSong = song;
 
 				Play(song);
 			}
@@ -526,38 +529,16 @@ namespace MusicStreaming
 			timer.Tick += PositionTimer_Tick!;
 			timer.Start();
 
-			IsPlaying = true;
+			isPlaying = true;
 			mpvPlayer.MediaFinished += MediaFinished_Event;
 		}
 
 		private SongQueryModel GetNextSong()
 		{
-			int currentIndex = songs.FindIndex(song => song.Id == CurrentSong.Id);
+			int currentIndex = songs.FindIndex(song => song.Id == currentSong.Id);
 			int nextIndex = (currentIndex + 1) % songs.Count;
 			var nextSong = songs[nextIndex];
 			return nextSong;
-		}
-
-		private void MediaFinished_Event(object sender, EventArgs e)
-		{
-			if (IsRepeat)
-			{
-				Play(CurrentSong);
-			}
-			else
-			{
-				CurrentSong = GetNextSong();
-				Play(CurrentSong);
-			}
-
-		}
-
-		private void PositionTimer_Tick(object sender, EventArgs e)
-		{
-			if (!IsPlaying)
-				return;
-			lbMinTime.Text = mpvPlayer.Position.ToString("mm':'ss");
-			trackBar.Value = (int)mpvPlayer.Position.TotalMilliseconds;
 		}
 
 		private Image GetImageWithHeaders(string imageUrl, string bearerToken)
@@ -573,6 +554,53 @@ namespace MusicStreaming
 					return Image.FromStream(memoryStream);
 				}
 			}
+		}
+
+		public void ShufflePlaylist()
+		{
+			shuffledSongs = new List<SongQueryModel>(songs);
+			rng = new Random();
+
+			int n = shuffledSongs.Count;
+			while (n > 1)
+			{
+				n--;
+				int k = rng.Next(n + 1);
+				SongQueryModel temp = shuffledSongs[k];
+				shuffledSongs[k] = shuffledSongs[n];
+				shuffledSongs[n] = temp;
+			}
+		}
+		#endregion
+
+		#region Common Event
+		private void MediaFinished_Event(object sender, EventArgs e)
+		{
+			if (isRepeat)
+			{
+				Play(currentSong);
+			}
+			else if (isShuffle)
+			{
+				SongQueryModel nextSong = shuffledSongs[0];
+				shuffledSongs.RemoveAt(0);
+				currentSong = nextSong;
+				Play(currentSong);
+			}	
+			else
+			{
+				currentSong = GetNextSong();
+				Play(currentSong);
+			}
+
+		}
+
+		private void PositionTimer_Tick(object sender, EventArgs e)
+		{
+			if (!isPlaying)
+				return;
+			lbMinTime.Text = mpvPlayer.Position.ToString("mm':'ss");
+			trackBar.Value = (int)mpvPlayer.Position.TotalMilliseconds;
 		}
 		#endregion
 
