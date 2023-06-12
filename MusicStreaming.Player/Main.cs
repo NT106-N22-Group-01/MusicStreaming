@@ -1,14 +1,10 @@
-﻿using System.Data;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using MusicStreaming.Player.Model;
-using MusicStreaming.Config;
-using MusicStreaming.Player.mpvWrapper;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using MusicStreaming.Player;
-using System.Numerics;
 using System.Net;
-using System.Windows.Forms;
+using Mpv.NET.Player;
 
 namespace MusicStreaming
 {
@@ -23,17 +19,20 @@ namespace MusicStreaming
 		int? SelectedArtistID;
 		int? SelectedAlbumID;
 
-		private mpvWrapper mpvWrapper;
+		public MpvPlayer mpvPlayer;
+		private SongQueryModel CurrentSong;
 		private bool IsPlaying = false;
 		private bool IsMute = false;
+		private bool IsRepeat = false;
+		private bool IsShuffle = false;
 
 		public Main(string Token)
 		{
 			InitializeComponent();
 			TokenManager.AccessToken = Token;
-			mpvWrapper = new mpvWrapper();
 		}
 
+		#region Form Overload
 		//Drag Form
 		[DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
 		private extern static void ReleaseCapture();
@@ -170,15 +169,11 @@ namespace MusicStreaming
 			formSize = Size;
 			this.WindowState = FormWindowState.Minimized;
 		}
+		#endregion
 
 		private void ActiveMenu(Button btn)
 		{
 			btn.BackColor = Color.FromArgb(255, 128, 0);
-		}
-
-		private bool barChange = true;
-		private void timer1_Tick(object sender, EventArgs e)
-		{
 		}
 
 		private void btnOpen_Click(object sender, EventArgs e)
@@ -209,29 +204,10 @@ namespace MusicStreaming
 			ActiveMenu(sender as Button);
 		}
 
-		private void trackbarVolume_MouseUp(object sender, MouseEventArgs e)
+		#region Form Load Close Event
+		private void Main_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			int trackBarWidth = trackbarVolume.Width - 20;
-			int newVolume = 100 * e.X / trackBarWidth;
-
-			// Ensure the new volume is within the valid range of 0 to 100
-			newVolume = Math.Max(0, Math.Min(100, newVolume));
-
-			trackbarVolume.Value = newVolume;
-			mpvWrapper.SetVolume(trackbarVolume.Value);
-		}
-
-		private void trackbarVolume_MouseMove(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left)
-			{
-				mpvWrapper.SetVolume(trackbarVolume.Value);
-			}
-		}
-
-		private void panel1_Click(object sender, EventArgs e)
-		{
-
+			Stop();
 		}
 
 		private async void Main_Load(object sender, EventArgs e)
@@ -241,7 +217,162 @@ namespace MusicStreaming
 			await PopulateAlbumName();
 			await PopulateSong();
 		}
+		#endregion
 
+		#region Trackbar Control
+		private void trackBar_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left && IsPlaying)
+			{
+				var pos = TimeSpan.FromMilliseconds(trackBar.Value);
+				mpvPlayer.SeekAsync(pos);
+			}
+		}
+
+		private void trackBar_MouseUp(object sender, MouseEventArgs e)
+		{
+			/*			int trackBarWidth = trackbarVolume.Width - 20;
+						int duration = (int)mpvWrapper.mpvPlayer.Duration.TotalMilliseconds;
+						int newDuration = duration * e.X / trackBarWidth;
+
+						newDuration = Math.Max(0, Math.Min(duration, newDuration));
+
+						trackbarVolume.Value = newDuration;
+						var pos = TimeSpan.FromMilliseconds(newDuration);
+						mpvWrapper.mpvPlayer.SeekAsync(pos);*/
+		}
+
+		private void trackbarVolume_MouseUp(object sender, MouseEventArgs e)
+		{
+			int trackBarWidth = trackbarVolume.Width - 20;
+			int newVolume = 100 * e.X / trackBarWidth;
+
+			// Ensure the new volume is within the valid range of 0 to 100
+			newVolume = Math.Max(0, Math.Min(100, newVolume));
+
+			trackbarVolume.Value = newVolume;
+			SetVolume(trackbarVolume.Value);
+		}
+
+		private void trackbarVolume_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				SetVolume(trackbarVolume.Value);
+			}
+		}
+		#endregion
+
+		#region Control Button
+		private void btnPlay_Click(object sender, EventArgs e)
+		{
+			if (IsPlaying)
+			{
+				TogglePauseResume();
+			}
+		}
+
+		private void iconButtonMute_Click(object sender, EventArgs e)
+		{
+			if (IsMute == false)
+			{
+				SetMute(true);
+				iconButtonMute.IconChar = FontAwesome.Sharp.IconChar.VolumeMute;
+				IsMute = true;
+			}
+			else
+			{
+				SetMute(false);
+				iconButtonMute.IconChar = FontAwesome.Sharp.IconChar.VolumeHigh;
+				IsMute = false;
+			}
+		}
+
+		private void btbRepeat_Click(object sender, EventArgs e)
+		{
+			if (IsRepeat == false)
+			{
+				btbRepeat.BackColor = Color.MediumVioletRed;
+				IsRepeat = true;
+			}
+			else
+			{
+				btbRepeat.BackColor = Color.Black;
+				IsRepeat = false;
+			}
+		}
+
+		private void btnShuffle_Click(object sender, EventArgs e)
+		{
+			if (IsShuffle == false)
+			{
+				btnShuffle.BackColor = Color.MediumVioletRed;
+				IsShuffle = true;
+			}
+			else
+			{
+				btnShuffle.BackColor = Color.Black;
+				IsShuffle = false;
+			}
+		}
+		#endregion
+
+		#region List View Event
+		private async void listViewArtist_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (listViewArtist.SelectedItems.Count <= 0)
+			{
+				return;
+			}
+			if (listViewArtist.SelectedItems[0].Text == "All")
+			{
+				SelectedArtistID = null;
+				await PopulateAlbumName();
+				await PopulateSong();
+			}
+			else
+			{
+				ArtistModel selectedArtist = (ArtistModel)listViewArtist.SelectedItems[0].Tag;
+				SelectedArtistID = selectedArtist.Id;
+				await PopulateAlbumName(SelectedArtistID);
+				await PopulateSong(SelectedArtistID);
+			}
+		}
+
+		private async void listViewAlbum_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (listViewAlbum.SelectedItems.Count <= 0)
+			{
+				return;
+			}
+			if (listViewAlbum.SelectedItems[0].Text == "All")
+			{
+				SelectedAlbumID = null;
+				await PopulateSong(SelectedArtistID);
+			}
+			else
+			{
+				AlbumModel selectedAlbum = (AlbumModel)listViewAlbum.SelectedItems[0].Tag;
+				SelectedAlbumID = selectedAlbum.Id;
+				await PopulateSong(SelectedArtistID, SelectedAlbumID);
+			}
+		}
+
+		private void listViewSongs_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (listViewSongs.SelectedItems.Count > 0)
+			{
+				ListViewItem selectedItem = listViewSongs.SelectedItems[0];
+
+				SongQueryModel song = (SongQueryModel)selectedItem.Tag;
+				CurrentSong = song;
+
+				Play(song);
+			}
+		}
+		#endregion
+
+		#region CommonMethod
 		private async Task PopulateModels(string query = "")
 		{
 			songs = await GetSongsFromApi(query);
@@ -348,60 +479,66 @@ namespace MusicStreaming
 			}
 		}
 
-		private async void listViewArtist_SelectedIndexChanged(object sender, EventArgs e)
+		private void Play(SongQueryModel song)
 		{
-			if (listViewArtist.SelectedItems.Count <= 0)
+			var songURL = $"{Config.Config.ApiBaseUrl}/v1/file/{song.Id}";
+			Play(songURL, trackbarVolume.Value, TokenManager.AccessToken);
+			var imageURL = $"{Config.Config.ApiBaseUrl}/v1/album/{song.album_id}/artwork";
+			LoadImageWithHeaders(imageURL, TokenManager.AccessToken);
+
+			var duration = TimeSpan.FromMilliseconds(song.Duration);
+			var formattedDuration = duration.ToString("mm':'ss");
+			if (lbMaxTime.InvokeRequired)
 			{
-				return;
-			}
-			if (listViewArtist.SelectedItems[0].Text == "All")
-			{
-				SelectedArtistID = null;
-				await PopulateAlbumName();
-				await PopulateSong();
+				lbMaxTime.Invoke((MethodInvoker)(() =>
+				{
+					lbMaxTime.Text = formattedDuration;
+				}));
 			}
 			else
 			{
-				ArtistModel selectedArtist = (ArtistModel)listViewArtist.SelectedItems[0].Tag;
-				SelectedArtistID = selectedArtist.Id;
-				await PopulateAlbumName(SelectedArtistID);
-				await PopulateSong(SelectedArtistID);
+				lbMaxTime.Text = formattedDuration;
 			}
+
+			trackBar.MaxValue = song.Duration;
+			trackBar.Value = 0;
+
+			timer.Interval = 1000;
+			timer.Tick += PositionTimer_Tick!;
+			timer.Start();
+
+			IsPlaying = true;
+			mpvPlayer.MediaFinished += MediaFinished_Event;
 		}
 
-		private async void listViewAlbum_SelectedIndexChanged(object sender, EventArgs e)
+		private SongQueryModel GetNextSong()
 		{
-			if (listViewAlbum.SelectedItems.Count <= 0)
+			int currentIndex = songs.FindIndex(song => song.Id == CurrentSong.Id);
+			int nextIndex = (currentIndex + 1) % songs.Count;
+			var nextSong = songs[nextIndex];
+			return nextSong;
+		}
+
+		private void MediaFinished_Event(object sender, EventArgs e)
+		{
+			if (IsRepeat)
 			{
-				return;
-			}
-			if (listViewAlbum.SelectedItems[0].Text == "All")
-			{
-				SelectedAlbumID = null;
-				await PopulateSong(SelectedArtistID);
+				Play(CurrentSong);
 			}
 			else
 			{
-				AlbumModel selectedAlbum = (AlbumModel)listViewAlbum.SelectedItems[0].Tag;
-				SelectedAlbumID = selectedAlbum.Id;
-				await PopulateSong(SelectedArtistID, SelectedAlbumID);
+				CurrentSong = GetNextSong();
+				Play(CurrentSong);
 			}
+
 		}
 
-		private void listViewSongs_MouseDoubleClick(object sender, MouseEventArgs e)
+		private void PositionTimer_Tick(object sender, EventArgs e)
 		{
-			if (listViewSongs.SelectedItems.Count > 0)
-			{
-				ListViewItem selectedItem = listViewSongs.SelectedItems[0];
-
-				SongQueryModel song = (SongQueryModel)selectedItem.Tag;
-
-				var songURL = $"{Config.Config.ApiBaseUrl}/v1/file/{song.Id}";
-				mpvWrapper.Play(songURL, trackbarVolume.Value, TokenManager.AccessToken);
-				IsPlaying = true;
-				var imageURL = $"{Config.Config.ApiBaseUrl}/v1/album/{song.album_id}/artwork";
-				LoadImageWithHeaders(imageURL, TokenManager.AccessToken);
-			}
+			if (!IsPlaying)
+				return;
+			lbMinTime.Text = mpvPlayer.Position.ToString("mm':'ss");
+			trackBar.Value = (int)mpvPlayer.Position.TotalMilliseconds;
 		}
 
 		private void LoadImageWithHeaders(string imageUrl, string bearerToken)
@@ -418,35 +555,51 @@ namespace MusicStreaming
 				pbSong.ImageLocation = tempFilePath;
 			}
 		}
+		#endregion
 
-		private void Main_FormClosing(object sender, FormClosingEventArgs e)
+		#region MPVWrapper
+		public void Play(string url, int Volume, string token = "")
 		{
-			mpvWrapper.Stop();
+			Stop();
+
+			mpvPlayer = new MpvPlayer();
+			mpvPlayer.API.SetPropertyString("http-header-fields", $"Authorization:  Bearer {token}");
+			mpvPlayer.API.SetPropertyString("audio-display", "no");
+			mpvPlayer.API.SetPropertyString("video", "no");
+			SetVolume(Volume);
+			mpvPlayer.Load(url);
+			mpvPlayer.Resume();
 		}
 
-		private void btnPlay_Click(object sender, EventArgs e)
+		public void TogglePauseResume()
 		{
-			if (IsPlaying)
+			if (mpvPlayer != null)
 			{
-				mpvWrapper.TogglePauseResume();
+				if (mpvPlayer.IsPlaying)
+				{
+					mpvPlayer.Pause();
+				}
+				else
+				{
+					mpvPlayer.Resume();
+				}
 			}
 		}
 
-		private void iconButtonMute_Click(object sender, EventArgs e)
+		public void SetVolume(int Volume)
 		{
-			if (IsMute == false)
-			{
-				mpvWrapper.SetMute(true);
-				iconButtonMute.IconChar = FontAwesome.Sharp.IconChar.VolumeMute;
-				IsMute = true;
-			}
-			else
-			{
-				mpvWrapper.SetMute(false);
-				iconButtonMute.IconChar = FontAwesome.Sharp.IconChar.VolumeHigh;
-				IsMute = false;
-			}
-
+			mpvPlayer.Volume = Volume;
 		}
+
+		public void SetMute(bool Mute)
+		{
+			mpvPlayer.API.SetPropertyString("mute", Mute ? "yes" : "no");
+		}
+
+		public void Stop()
+		{
+			mpvPlayer?.Stop();
+		}
+		#endregion
 	}
 }

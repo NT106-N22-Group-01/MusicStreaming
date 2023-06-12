@@ -43,7 +43,7 @@
 			btnMin = new FontAwesome.Sharp.IconButton();
 			btnMax = new FontAwesome.Sharp.IconButton();
 			btnExit = new FontAwesome.Sharp.IconButton();
-			timer1 = new System.Windows.Forms.Timer(components);
+			timer = new System.Windows.Forms.Timer(components);
 			panel9 = new Panel();
 			panelContainer = new Panel();
 			label4 = new Label();
@@ -70,8 +70,9 @@
 			lbMaxTime = new Label();
 			lbMinTime = new Label();
 			panel10 = new Panel();
-			rjCircularPictureBox5 = new RJCodeAdvance.RJControls.RJCircularPictureBox();
-			rjCircularPictureBox4 = new RJCodeAdvance.RJControls.RJCircularPictureBox();
+			homeView1 = new Player.View.HomeView();
+			btnShuffle = new RJCodeAdvance.RJControls.RJCircularPictureBox();
+			btbRepeat = new RJCodeAdvance.RJControls.RJCircularPictureBox();
 			rjCircularPictureBox3 = new RJCodeAdvance.RJControls.RJCircularPictureBox();
 			rjCircularPictureBox2 = new RJCodeAdvance.RJControls.RJCircularPictureBox();
 			btnPlay = new RJCodeAdvance.RJControls.RJCircularPictureBox();
@@ -92,8 +93,8 @@
 			panel8.SuspendLayout();
 			panel11.SuspendLayout();
 			panel10.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox5).BeginInit();
-			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox4).BeginInit();
+			((System.ComponentModel.ISupportInitialize)btnShuffle).BeginInit();
+			((System.ComponentModel.ISupportInitialize)btbRepeat).BeginInit();
 			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox3).BeginInit();
 			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox2).BeginInit();
 			((System.ComponentModel.ISupportInitialize)btnPlay).BeginInit();
@@ -119,6 +120,7 @@
 			panelMenu.Name = "panelMenu";
 			panelMenu.Size = new Size(227, 789);
 			panelMenu.TabIndex = 1;
+			panelMenu.Paint += panelMenu_Paint;
 			// 
 			// iconButton4
 			// 
@@ -319,9 +321,9 @@
 			btnExit.UseVisualStyleBackColor = true;
 			btnExit.Click += btnExit_Click;
 			// 
-			// timer1
+			// timer
 			// 
-			timer1.Tick += timer1_Tick;
+			timer.Tick += timer1_Tick;
 			// 
 			// panel9
 			// 
@@ -371,6 +373,7 @@
 			listViewSongs.TabIndex = 4;
 			listViewSongs.UseCompatibleStateImageBehavior = false;
 			listViewSongs.View = View.Details;
+			listViewSongs.SelectedIndexChanged += listViewSongs_SelectedIndexChanged;
 			listViewSongs.MouseDoubleClick += listViewSongs_MouseDoubleClick;
 			// 
 			// columnNo
@@ -552,7 +555,6 @@
 			trackBar.BallonColor = Color.FromArgb(255, 128, 0);
 			trackBar.BarColor = Color.FromArgb(218, 220, 223);
 			trackBar.BaseColor = Color.FromArgb(15, 15, 16);
-			trackBar.Cursor = Cursors.Hand;
 			trackBar.FillBarColor = Color.FromArgb(255, 128, 0);
 			trackBar.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
 			trackBar.ForeColor = Color.White;
@@ -569,6 +571,8 @@
 			trackBar.ThemeColor = Color.FromArgb(64, 158, 255);
 			trackBar.UnknownColor = Color.White;
 			trackBar.Value = 0;
+			trackBar.MouseMove += trackBar_MouseMove;
+			trackBar.MouseUp += trackBar_MouseUp;
 			// 
 			// lbMaxTime
 			// 
@@ -595,8 +599,9 @@
 			// 
 			// panel10
 			// 
-			panel10.Controls.Add(rjCircularPictureBox5);
-			panel10.Controls.Add(rjCircularPictureBox4);
+			panel10.Controls.Add(homeView1);
+			panel10.Controls.Add(btnShuffle);
+			panel10.Controls.Add(btbRepeat);
 			panel10.Controls.Add(rjCircularPictureBox3);
 			panel10.Controls.Add(rjCircularPictureBox2);
 			panel10.Controls.Add(btnPlay);
@@ -606,39 +611,50 @@
 			panel10.Size = new Size(788, 72);
 			panel10.TabIndex = 0;
 			// 
-			// rjCircularPictureBox5
+			// homeView1
 			// 
-			rjCircularPictureBox5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-			rjCircularPictureBox5.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
-			rjCircularPictureBox5.BorderColor = Color.RoyalBlue;
-			rjCircularPictureBox5.BorderColor2 = Color.HotPink;
-			rjCircularPictureBox5.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-			rjCircularPictureBox5.BorderSize = 0;
-			rjCircularPictureBox5.GradientAngle = 50F;
-			rjCircularPictureBox5.Image = Player.Properties.Resources.icons8_shuffle_24px;
-			rjCircularPictureBox5.Location = new Point(269, 16);
-			rjCircularPictureBox5.Name = "rjCircularPictureBox5";
-			rjCircularPictureBox5.Size = new Size(41, 41);
-			rjCircularPictureBox5.SizeMode = PictureBoxSizeMode.CenterImage;
-			rjCircularPictureBox5.TabIndex = 25;
-			rjCircularPictureBox5.TabStop = false;
+			homeView1.BackColor = Color.FromArgb(27, 28, 34);
+			homeView1.Location = new Point(742, 40);
+			homeView1.Name = "homeView1";
+			homeView1.Size = new Size(8, 8);
+			homeView1.TabIndex = 26;
 			// 
-			// rjCircularPictureBox4
+			// btnShuffle
 			// 
-			rjCircularPictureBox4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-			rjCircularPictureBox4.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
-			rjCircularPictureBox4.BorderColor = Color.RoyalBlue;
-			rjCircularPictureBox4.BorderColor2 = Color.HotPink;
-			rjCircularPictureBox4.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-			rjCircularPictureBox4.BorderSize = 0;
-			rjCircularPictureBox4.GradientAngle = 50F;
-			rjCircularPictureBox4.Image = Player.Properties.Resources.icons8_repeat_24px;
-			rjCircularPictureBox4.Location = new Point(479, 16);
-			rjCircularPictureBox4.Name = "rjCircularPictureBox4";
-			rjCircularPictureBox4.Size = new Size(41, 41);
-			rjCircularPictureBox4.SizeMode = PictureBoxSizeMode.CenterImage;
-			rjCircularPictureBox4.TabIndex = 24;
-			rjCircularPictureBox4.TabStop = false;
+			btnShuffle.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+			btnShuffle.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
+			btnShuffle.BorderColor = Color.RoyalBlue;
+			btnShuffle.BorderColor2 = Color.HotPink;
+			btnShuffle.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+			btnShuffle.BorderSize = 0;
+			btnShuffle.GradientAngle = 50F;
+			btnShuffle.Image = Player.Properties.Resources.icons8_shuffle_24px;
+			btnShuffle.Location = new Point(269, 16);
+			btnShuffle.Name = "btnShuffle";
+			btnShuffle.Size = new Size(41, 41);
+			btnShuffle.SizeMode = PictureBoxSizeMode.CenterImage;
+			btnShuffle.TabIndex = 25;
+			btnShuffle.TabStop = false;
+			btnShuffle.Click += btnShuffle_Click;
+			// 
+			// btbRepeat
+			// 
+			btbRepeat.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+			btbRepeat.BackColor = Color.Black;
+			btbRepeat.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
+			btbRepeat.BorderColor = Color.RoyalBlue;
+			btbRepeat.BorderColor2 = Color.HotPink;
+			btbRepeat.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+			btbRepeat.BorderSize = 0;
+			btbRepeat.GradientAngle = 50F;
+			btbRepeat.Image = Player.Properties.Resources.icons8_repeat_24px;
+			btbRepeat.Location = new Point(479, 16);
+			btbRepeat.Name = "btbRepeat";
+			btbRepeat.Size = new Size(41, 41);
+			btbRepeat.SizeMode = PictureBoxSizeMode.CenterImage;
+			btbRepeat.TabIndex = 24;
+			btbRepeat.TabStop = false;
+			btbRepeat.Click += btbRepeat_Click;
 			// 
 			// rjCircularPictureBox3
 			// 
@@ -843,8 +859,8 @@
 			panel11.ResumeLayout(false);
 			panel11.PerformLayout();
 			panel10.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox5).EndInit();
-			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox4).EndInit();
+			((System.ComponentModel.ISupportInitialize)btnShuffle).EndInit();
+			((System.ComponentModel.ISupportInitialize)btbRepeat).EndInit();
 			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox3).EndInit();
 			((System.ComponentModel.ISupportInitialize)rjCircularPictureBox2).EndInit();
 			((System.ComponentModel.ISupportInitialize)btnPlay).EndInit();
@@ -865,7 +881,7 @@
 		private FontAwesome.Sharp.IconButton iconButton5;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.Timer timer1;
+		private System.Windows.Forms.Timer timer;
 		private System.Windows.Forms.Panel panel9;
 		private System.Windows.Forms.Panel panelContainer;
 		private FontAwesome.Sharp.IconButton btnHome;
@@ -881,8 +897,8 @@
 		private System.Windows.Forms.Label lbMaxTime;
 		private System.Windows.Forms.Label lbMinTime;
 		private System.Windows.Forms.Panel panel10;
-		private RJCodeAdvance.RJControls.RJCircularPictureBox rjCircularPictureBox5;
-		private RJCodeAdvance.RJControls.RJCircularPictureBox rjCircularPictureBox4;
+		private RJCodeAdvance.RJControls.RJCircularPictureBox btnShuffle;
+		private RJCodeAdvance.RJControls.RJCircularPictureBox btbRepeat;
 		private RJCodeAdvance.RJControls.RJCircularPictureBox rjCircularPictureBox3;
 		private RJCodeAdvance.RJControls.RJCircularPictureBox rjCircularPictureBox2;
 		private RJCodeAdvance.RJControls.RJCircularPictureBox btnPlay;
@@ -912,5 +928,6 @@
 		private ColumnHeader columnSongView;
 		private ColumnHeader columnSongFormat;
 		private ColumnHeader columnAlbum;
+		private Player.View.HomeView homeView1;
 	}
 }
