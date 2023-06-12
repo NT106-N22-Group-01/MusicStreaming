@@ -1,8 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
-using MusicStreaming.Config;
 
-namespace MusicStreaming
+namespace MusicStreaming.Auth
 {
 	public partial class fmLogin : Form
 	{
@@ -42,7 +41,7 @@ namespace MusicStreaming
 				}
 				else
 				{
-					MessageBox.Show("Login failed. Please check your credentials.");
+					var form = new MusicStreaming.Player.Main()
 				}
 			}
 			catch (Exception ex)

@@ -1,4 +1,4 @@
-namespace MusicStreaming
+namespace MusicStreaming.Auth
 {
     internal static class Program
     {

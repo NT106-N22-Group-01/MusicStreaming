@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-namespace MusicStreaming
+namespace MusicStreaming.Auth
 {
 	public partial class fmRegister : Form
 	{

@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 
-namespace MusicStreaming
+namespace MusicStreaming.Player
 {
 	public partial class Main : Form
 	{

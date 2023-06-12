@@ -1,4 +1,4 @@
-﻿namespace MusicStreaming
+﻿namespace MusicStreaming.Player
 {
 	partial class Main
 	{

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace MusicStreaming
+namespace MusicStreaming.Auth
 {
 	public static class Common
 	{

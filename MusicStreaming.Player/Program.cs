@@ -1,5 +1,3 @@
-using MusicStreaming;
-
 namespace MusicStreaming.Player
 {
 	internal static class Program

@@ -1,4 +1,4 @@
-﻿namespace MusicStreaming
+﻿namespace MusicStreaming.Auth
 {
 	partial class fmRegister
 	{
