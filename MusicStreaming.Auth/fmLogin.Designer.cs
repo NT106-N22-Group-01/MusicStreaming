@@ -1,4 +1,7 @@
-﻿namespace MusicStreaming.Auth
+﻿using MusicStreaming.Player;
+using System.Resources;
+
+namespace MusicStreaming.Auth
 {
 	partial class fmLogin
 	{
@@ -28,6 +31,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
 			label4 = new Label();
 			label5 = new Label();
 			label1 = new Label();
@@ -171,6 +175,7 @@
 			Text = "Music Streaming";
 			ResumeLayout(false);
 			PerformLayout();
+			Icon = (Icon)resources.GetObject("$this.Icon");
 		}
 
 		#endregion

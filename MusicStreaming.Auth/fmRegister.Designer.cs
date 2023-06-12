@@ -1,4 +1,6 @@
-﻿namespace MusicStreaming.Auth
+﻿using MusicStreaming.Player;
+
+namespace MusicStreaming.Auth
 {
 	partial class fmRegister
 	{
@@ -28,6 +30,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
 			label6 = new Label();
 			registerButton = new Button();
 			txtConfirmpwd = new TextBox();
@@ -193,6 +196,7 @@
 			Text = "register";
 			ResumeLayout(false);
 			PerformLayout();
+			Icon = (Icon)resources.GetObject("$this.Icon");
 		}
 
 		#endregion
