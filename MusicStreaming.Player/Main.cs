@@ -331,22 +331,22 @@ namespace MusicStreaming
 			}
 		}
 
-		private void buttonNext_Click(object sender, EventArgs e)
+		private async void buttonNext_Click(object sender, EventArgs e)
 		{
 
 			currentSong = GetNextSong();
 			if (currentSong != null)
 			{
-				Play(currentSong);
+				await Play(currentSong);
 			}
 		}
 
-		private void buttonPrevious_Click(object sender, EventArgs e)
+		private async void buttonPrevious_Click(object sender, EventArgs e)
 		{
 			currentSong = GetPreviousSong();
 			if (currentSong != null)
 			{
-				Play(currentSong);
+				await Play(currentSong);
 			}
 		}
 
@@ -410,7 +410,7 @@ namespace MusicStreaming
 			}
 		}
 
-		private void listViewSongs_MouseDoubleClick(object sender, MouseEventArgs e)
+		private async void listViewSongs_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			if (listViewSongs.SelectedItems.Count > 0)
 			{
@@ -419,7 +419,7 @@ namespace MusicStreaming
 				SongQueryModel song = (SongQueryModel)selectedItem.Tag;
 				currentSong = song;
 
-				Play(song);
+				await Play(song);
 			}
 		}
 		#endregion
@@ -531,14 +531,14 @@ namespace MusicStreaming
 			}
 		}
 
-		private void Play(SongQueryModel song)
+		private async Task Play(SongQueryModel song)
 		{
 			// Load artwork first
 			var imageURL = $"{Config.Config.ApiBaseUrl}/v1/album/{song.album_id}/artwork";
-			pbSong.Image = GetImageWithHeaders(imageURL, TokenManager.AccessToken);
+			pbSong.Image = await GetImageWithHeaders(imageURL, TokenManager.AccessToken);
 
 			var songURL = $"{Config.Config.ApiBaseUrl}/v1/file/{song.Id}";
-			Play(songURL, trackbarVolume.Value, TokenManager.AccessToken);
+			await Play(songURL, trackbarVolume.Value, TokenManager.AccessToken);
 			isPlaying = true;
 
 			var duration = TimeSpan.FromMilliseconds(song.Duration);
@@ -615,7 +615,7 @@ namespace MusicStreaming
 			}
 		}
 
-		private Image GetImageWithHeaders(string imageUrl, string bearerToken)
+		private async Task<Image> GetImageWithHeaders(string imageUrl, string bearerToken)
 		{
 			using (WebClient client = new WebClient())
 			{
@@ -648,18 +648,18 @@ namespace MusicStreaming
 		#endregion
 
 		#region Common Event
-		private void MediaFinished_Event(object sender, EventArgs e)
+		private async void MediaFinished_Event(object sender, EventArgs e)
 		{
 			if (isRepeat)
 			{
-				Play(currentSong);
+				await Play(currentSong);
 			}
 			else
 			{
 				currentSong = GetNextSong();
 				if (currentSong != null)
 				{
-					Play(currentSong);
+					await Play(currentSong);
 				}
 			}
 		}
@@ -674,7 +674,7 @@ namespace MusicStreaming
 		#endregion
 
 		#region MPVWrapper
-		public void Play(string url, int Volume, string token = "")
+		public async Task Play(string url, int Volume, string token = "")
 		{
 			Stop();
 
