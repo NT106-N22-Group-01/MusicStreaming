@@ -1,6 +1,7 @@
 ﻿using Mpv.NET.Player;
 using MusicStreaming.Player;
 using MusicStreaming.Player.Model;
+using MusicStreaming.Player.Views;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
@@ -176,37 +177,45 @@ namespace MusicStreaming.Player
 
 		private void ActiveMenu(Button btn)
 		{
+			iconButtonBXH.BackColor = Color.FromArgb(25, 26, 31);
+			btnHome.BackColor = Color.FromArgb(25, 26, 31);
 			btn.BackColor = Color.FromArgb(255, 128, 0);
 		}
 
-		private void btnOpen_Click(object sender, EventArgs e)
+		private void iconButtonBXH_Click(object sender, EventArgs e)
 		{
+			foreach (Control control in panelContainer.Controls)
+			{
+				if (control is BXH)
+				{
+					return;
+				}
+				control.Visible = false;
+			}
+			List<SongQueryModel> songBXH = songs.OrderByDescending(song => song.View).ToList();
+			var BXH = new BXH(songBXH);
+			BXH.Dock = DockStyle.Fill;
+			panelContainer.Controls.Add(BXH);
+			ActiveMenu(iconButtonBXH);
 		}
 
 		private void btnHome_Click(object sender, EventArgs e)
 		{
+			foreach (Control control in panelContainer.Controls)
+			{
+				if (control is BXH)
+				{
+					panelContainer.Controls.Remove(control);
+					control.Dispose();
+					break;
+				}
+				else
+				{
+					control.Visible = true;
+				}
+			}
+			ActiveMenu(btnHome);
 		}
-
-		private void btnCate_Click(object sender, EventArgs e)
-		{
-			ActiveMenu(sender as Button);
-		}
-
-		private void btnTop_Click(object sender, EventArgs e)
-		{
-			ActiveMenu(sender as Button);
-		}
-
-		private void btnBXH_Click(object sender, EventArgs e)
-		{
-			ActiveMenu(sender as Button);
-		}
-
-		private void btnPlaylist_Click(object sender, EventArgs e)
-		{
-			ActiveMenu(sender as Button);
-		}
-
 		#region Form Load Close Event
 		private void Main_FormClosing(object sender, FormClosingEventArgs e)
 		{

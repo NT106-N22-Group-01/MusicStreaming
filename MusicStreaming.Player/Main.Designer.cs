@@ -31,7 +31,7 @@
 			components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
 			panelMenu = new Panel();
-			iconButton3 = new FontAwesome.Sharp.IconButton();
+			iconButtonBXH = new FontAwesome.Sharp.IconButton();
 			panel7 = new Panel();
 			iconButtonLogout = new FontAwesome.Sharp.IconButton();
 			btnHome = new FontAwesome.Sharp.IconButton();
@@ -108,7 +108,7 @@
 			// panelMenu
 			// 
 			panelMenu.BackColor = Color.FromArgb(25, 26, 31);
-			panelMenu.Controls.Add(iconButton3);
+			panelMenu.Controls.Add(iconButtonBXH);
 			panelMenu.Controls.Add(panel7);
 			panelMenu.Controls.Add(iconButtonLogout);
 			panelMenu.Controls.Add(btnHome);
@@ -120,29 +120,30 @@
 			panelMenu.Size = new Size(227, 789);
 			panelMenu.TabIndex = 1;
 			// 
-			// iconButton3
+			// iconButtonBXH
 			// 
-			iconButton3.BackColor = Color.FromArgb(25, 26, 31);
-			iconButton3.Dock = DockStyle.Top;
-			iconButton3.FlatAppearance.BorderSize = 0;
-			iconButton3.FlatStyle = FlatStyle.Flat;
-			iconButton3.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-			iconButton3.ForeColor = Color.White;
-			iconButton3.IconChar = FontAwesome.Sharp.IconChar.BarChart;
-			iconButton3.IconColor = Color.White;
-			iconButton3.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			iconButton3.IconSize = 30;
-			iconButton3.ImageAlign = ContentAlignment.MiddleLeft;
-			iconButton3.Location = new Point(0, 149);
-			iconButton3.Name = "iconButton3";
-			iconButton3.Padding = new Padding(10, 0, 0, 0);
-			iconButton3.Size = new Size(227, 48);
-			iconButton3.TabIndex = 7;
-			iconButton3.Tag = "BXH";
-			iconButton3.Text = "   BXH";
-			iconButton3.TextAlign = ContentAlignment.MiddleLeft;
-			iconButton3.TextImageRelation = TextImageRelation.ImageBeforeText;
-			iconButton3.UseVisualStyleBackColor = false;
+			iconButtonBXH.BackColor = Color.FromArgb(25, 26, 31);
+			iconButtonBXH.Dock = DockStyle.Top;
+			iconButtonBXH.FlatAppearance.BorderSize = 0;
+			iconButtonBXH.FlatStyle = FlatStyle.Flat;
+			iconButtonBXH.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+			iconButtonBXH.ForeColor = Color.White;
+			iconButtonBXH.IconChar = FontAwesome.Sharp.IconChar.BarChart;
+			iconButtonBXH.IconColor = Color.White;
+			iconButtonBXH.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			iconButtonBXH.IconSize = 30;
+			iconButtonBXH.ImageAlign = ContentAlignment.MiddleLeft;
+			iconButtonBXH.Location = new Point(0, 149);
+			iconButtonBXH.Name = "iconButtonBXH";
+			iconButtonBXH.Padding = new Padding(10, 0, 0, 0);
+			iconButtonBXH.Size = new Size(227, 48);
+			iconButtonBXH.TabIndex = 7;
+			iconButtonBXH.Tag = "BXH";
+			iconButtonBXH.Text = "   BXH";
+			iconButtonBXH.TextAlign = ContentAlignment.MiddleLeft;
+			iconButtonBXH.TextImageRelation = TextImageRelation.ImageBeforeText;
+			iconButtonBXH.UseVisualStyleBackColor = false;
+			iconButtonBXH.Click += iconButtonBXH_Click;
 			// 
 			// panel7
 			// 
@@ -897,7 +898,7 @@
 		private System.Windows.Forms.Label lbSongName;
 		private System.Windows.Forms.PictureBox pbSong;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private FontAwesome.Sharp.IconButton iconButton3;
+		private FontAwesome.Sharp.IconButton iconButtonBXH;
 		private Panel panel3;
 		private RJCodeAdvance.RJControls.RJTextBox rjTextBoxQuery;
 		private FontAwesome.Sharp.IconButton iconButton1;
