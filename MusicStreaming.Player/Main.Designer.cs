@@ -77,6 +77,8 @@
 			rjCircularPictureBox2 = new RJCodeAdvance.RJControls.RJCircularPictureBox();
 			btnPlay = new RJCodeAdvance.RJControls.RJCircularPictureBox();
 			panel1 = new Panel();
+			labelArtistAlbum = new Label();
+			labelTrackName = new Label();
 			lbSongArtist = new Label();
 			lbSongName = new Label();
 			pbSong = new PictureBox();
@@ -472,9 +474,9 @@
 			panel12.Controls.Add(iconButtonMute);
 			panel12.Controls.Add(trackbarVolume);
 			panel12.Dock = DockStyle.Fill;
-			panel12.Location = new Point(1177, 3);
+			panel12.Location = new Point(1288, 3);
 			panel12.Name = "panel12";
-			panel12.Size = new Size(315, 104);
+			panel12.Size = new Size(204, 104);
 			panel12.TabIndex = 2;
 			// 
 			// iconButtonMute
@@ -525,9 +527,9 @@
 			panel8.Controls.Add(panel11);
 			panel8.Controls.Add(panel10);
 			panel8.Dock = DockStyle.Fill;
-			panel8.Location = new Point(383, 3);
+			panel8.Location = new Point(423, 3);
 			panel8.Name = "panel8";
-			panel8.Size = new Size(788, 104);
+			panel8.Size = new Size(859, 104);
 			panel8.TabIndex = 1;
 			// 
 			// panel11
@@ -538,7 +540,7 @@
 			panel11.Dock = DockStyle.Fill;
 			panel11.Location = new Point(0, 72);
 			panel11.Name = "panel11";
-			panel11.Size = new Size(788, 32);
+			panel11.Size = new Size(859, 32);
 			panel11.TabIndex = 1;
 			// 
 			// trackBar
@@ -559,7 +561,7 @@
 			trackBar.MinValue = 0;
 			trackBar.Name = "trackBar";
 			trackBar.ShowValue = false;
-			trackBar.Size = new Size(610, 16);
+			trackBar.Size = new Size(681, 16);
 			trackBar.TabIndex = 31;
 			trackBar.Text = "hopeTrackBar1";
 			trackBar.ThemeColor = Color.FromArgb(64, 158, 255);
@@ -574,7 +576,7 @@
 			lbMaxTime.AutoSize = true;
 			lbMaxTime.Font = new Font("Open Sans", 10F, FontStyle.Regular, GraphicsUnit.Point);
 			lbMaxTime.ForeColor = Color.White;
-			lbMaxTime.Location = new Point(725, -2);
+			lbMaxTime.Location = new Point(796, -2);
 			lbMaxTime.Name = "lbMaxTime";
 			lbMaxTime.Size = new Size(61, 27);
 			lbMaxTime.TabIndex = 30;
@@ -602,7 +604,7 @@
 			panel10.Dock = DockStyle.Top;
 			panel10.Location = new Point(0, 0);
 			panel10.Name = "panel10";
-			panel10.Size = new Size(788, 72);
+			panel10.Size = new Size(859, 72);
 			panel10.TabIndex = 0;
 			// 
 			// homeView1
@@ -623,7 +625,7 @@
 			btnShuffle.BorderSize = 0;
 			btnShuffle.GradientAngle = 50F;
 			btnShuffle.Image = Player.Properties.Resources.icons8_shuffle_24px;
-			btnShuffle.Location = new Point(269, 16);
+			btnShuffle.Location = new Point(304, 16);
 			btnShuffle.Name = "btnShuffle";
 			btnShuffle.Size = new Size(41, 41);
 			btnShuffle.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -642,7 +644,7 @@
 			btbRepeat.BorderSize = 0;
 			btbRepeat.GradientAngle = 50F;
 			btbRepeat.Image = Player.Properties.Resources.icons8_repeat_24px;
-			btbRepeat.Location = new Point(479, 16);
+			btbRepeat.Location = new Point(514, 16);
 			btbRepeat.Name = "btbRepeat";
 			btbRepeat.Size = new Size(41, 41);
 			btbRepeat.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -660,7 +662,7 @@
 			rjCircularPictureBox3.BorderSize = 0;
 			rjCircularPictureBox3.GradientAngle = 50F;
 			rjCircularPictureBox3.Image = Player.Properties.Resources.icons8_end_32px;
-			rjCircularPictureBox3.Location = new Point(432, 16);
+			rjCircularPictureBox3.Location = new Point(467, 16);
 			rjCircularPictureBox3.Name = "rjCircularPictureBox3";
 			rjCircularPictureBox3.Size = new Size(41, 41);
 			rjCircularPictureBox3.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -677,7 +679,7 @@
 			rjCircularPictureBox2.BorderSize = 0;
 			rjCircularPictureBox2.GradientAngle = 50F;
 			rjCircularPictureBox2.Image = Player.Properties.Resources.icons8_skip_to_start_32px;
-			rjCircularPictureBox2.Location = new Point(316, 16);
+			rjCircularPictureBox2.Location = new Point(351, 16);
 			rjCircularPictureBox2.Name = "rjCircularPictureBox2";
 			rjCircularPictureBox2.Size = new Size(41, 41);
 			rjCircularPictureBox2.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -694,7 +696,7 @@
 			btnPlay.BorderSize = 2;
 			btnPlay.GradientAngle = 50F;
 			btnPlay.Image = Player.Properties.Resources.icons8_play_32px_7;
-			btnPlay.Location = new Point(369, 11);
+			btnPlay.Location = new Point(404, 11);
 			btnPlay.Name = "btnPlay";
 			btnPlay.Size = new Size(51, 51);
 			btnPlay.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -705,6 +707,8 @@
 			// panel1
 			// 
 			panel1.BackColor = Color.FromArgb(26, 26, 26);
+			panel1.Controls.Add(labelArtistAlbum);
+			panel1.Controls.Add(labelTrackName);
 			panel1.Controls.Add(lbSongArtist);
 			panel1.Controls.Add(lbSongName);
 			panel1.Controls.Add(pbSong);
@@ -712,8 +716,32 @@
 			panel1.Location = new Point(0, 0);
 			panel1.Margin = new Padding(0);
 			panel1.Name = "panel1";
-			panel1.Size = new Size(380, 110);
+			panel1.Size = new Size(420, 110);
 			panel1.TabIndex = 0;
+			// 
+			// labelArtistAlbum
+			// 
+			labelArtistAlbum.AutoEllipsis = true;
+			labelArtistAlbum.Font = new Font("Open Sans Semibold", 8F, FontStyle.Bold, GraphicsUnit.Point);
+			labelArtistAlbum.ForeColor = Color.DimGray;
+			labelArtistAlbum.Location = new Point(123, 64);
+			labelArtistAlbum.Name = "labelArtistAlbum";
+			labelArtistAlbum.Size = new Size(278, 46);
+			labelArtistAlbum.TabIndex = 4;
+			labelArtistAlbum.Text = "Artist + Album";
+			labelArtistAlbum.Visible = false;
+			// 
+			// labelTrackName
+			// 
+			labelTrackName.AutoEllipsis = true;
+			labelTrackName.Font = new Font("Open Sans Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point);
+			labelTrackName.ForeColor = Color.White;
+			labelTrackName.Location = new Point(123, 13);
+			labelTrackName.Name = "labelTrackName";
+			labelTrackName.Size = new Size(294, 51);
+			labelTrackName.TabIndex = 3;
+			labelTrackName.Text = "Track Name";
+			labelTrackName.Visible = false;
 			// 
 			// lbSongArtist
 			// 
@@ -750,9 +778,9 @@
 			// 
 			tableLayoutPanel1.BackColor = Color.FromArgb(15, 15, 16);
 			tableLayoutPanel1.ColumnCount = 3;
-			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.40132F));
-			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 53.06893F));
-			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 21.43532F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 28.0936451F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 57.85953F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.9799328F));
 			tableLayoutPanel1.Controls.Add(panel1, 0, 0);
 			tableLayoutPanel1.Controls.Add(panel8, 1, 0);
 			tableLayoutPanel1.Controls.Add(panel12, 2, 0);
@@ -923,5 +951,7 @@
 		private ColumnHeader columnSongFormat;
 		private ColumnHeader columnAlbum;
 		private Player.View.HomeView homeView1;
+		private Label labelArtistAlbum;
+		private Label labelTrackName;
 	}
 }

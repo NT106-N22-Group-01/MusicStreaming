@@ -329,8 +329,7 @@ namespace MusicStreaming
 			pictureBox.Dock = DockStyle.Fill;
 			pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 			pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-			var imageURL = $"{Config.Config.ApiBaseUrl}/v1/album/{currentSong.album_id}/artwork";
-			pictureBox.Image = GetImageWithHeaders(imageURL, TokenManager.AccessToken);
+			pictureBox.Image = clickedPictureBox.Image;
 
 			floatingPanelForm.ClientSize = pictureBox.Image.Size;
 			floatingPanelForm.Controls.Add(pictureBox);
@@ -503,10 +502,13 @@ namespace MusicStreaming
 
 		private void Play(SongQueryModel song)
 		{
-			var songURL = $"{Config.Config.ApiBaseUrl}/v1/file/{song.Id}";
-			Play(songURL, trackbarVolume.Value, TokenManager.AccessToken);
+			// Load artwork first
 			var imageURL = $"{Config.Config.ApiBaseUrl}/v1/album/{song.album_id}/artwork";
 			pbSong.Image = GetImageWithHeaders(imageURL, TokenManager.AccessToken);
+
+			var songURL = $"{Config.Config.ApiBaseUrl}/v1/file/{song.Id}";
+			Play(songURL, trackbarVolume.Value, TokenManager.AccessToken);
+			isPlaying = true;
 
 			var duration = TimeSpan.FromMilliseconds(song.Duration);
 			var formattedDuration = duration.ToString("mm':'ss");
@@ -516,10 +518,24 @@ namespace MusicStreaming
 				{
 					lbMaxTime.Text = formattedDuration;
 				}));
+				labelTrackName.Invoke((MethodInvoker)(() =>
+				{
+					labelTrackName.Text = song.Title;
+					labelTrackName.Visible = true;
+				}));
+				labelArtistAlbum.Invoke((MethodInvoker)(() =>
+				{
+					labelArtistAlbum.Text = $"{song.Artist} - {song.Album}";
+					labelArtistAlbum.Visible = true;
+				}));
 			}
 			else
 			{
 				lbMaxTime.Text = formattedDuration;
+				labelTrackName.Text = song.Title;
+				labelArtistAlbum.Text = $"{song.Artist} - {song.Album}";
+				labelTrackName.Visible = true;
+				labelArtistAlbum.Visible = true;
 			}
 
 			trackBar.MaxValue = song.Duration;
@@ -529,7 +545,6 @@ namespace MusicStreaming
 			timer.Tick += PositionTimer_Tick!;
 			timer.Start();
 
-			isPlaying = true;
 			mpvPlayer.MediaFinished += MediaFinished_Event;
 		}
 
@@ -586,7 +601,7 @@ namespace MusicStreaming
 				shuffledSongs.RemoveAt(0);
 				currentSong = nextSong;
 				Play(currentSong);
-			}	
+			}
 			else
 			{
 				currentSong = GetNextSong();
