@@ -1,10 +1,10 @@
-﻿using System.Runtime.InteropServices;
+﻿using Mpv.NET.Player;
+using MusicStreaming.Player;
 using MusicStreaming.Player.Model;
 using Newtonsoft.Json;
-using System.Net.Http.Headers;
-using MusicStreaming.Player;
 using System.Net;
-using Mpv.NET.Player;
+using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 
 namespace MusicStreaming
 {
