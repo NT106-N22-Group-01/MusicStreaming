@@ -315,6 +315,25 @@ namespace MusicStreaming
 				IsShuffle = false;
 			}
 		}
+
+		private void pbSong_Click(object sender, EventArgs e)
+		{
+			PictureBox clickedPictureBox = (PictureBox)sender;
+
+			Form floatingPanelForm = new Form();
+			PictureBox pictureBox = new PictureBox();
+
+			pictureBox.Dock = DockStyle.Fill;
+			pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+			pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+			var imageURL = $"{Config.Config.ApiBaseUrl}/v1/album/{CurrentSong.album_id}/artwork";
+			pictureBox.Image = GetImageWithHeaders(imageURL, TokenManager.AccessToken);
+
+			floatingPanelForm.ClientSize = pictureBox.Image.Size;
+			floatingPanelForm.Controls.Add(pictureBox);
+
+			floatingPanelForm.ShowDialog();
+		}
 		#endregion
 
 		#region List View Event
@@ -484,7 +503,7 @@ namespace MusicStreaming
 			var songURL = $"{Config.Config.ApiBaseUrl}/v1/file/{song.Id}";
 			Play(songURL, trackbarVolume.Value, TokenManager.AccessToken);
 			var imageURL = $"{Config.Config.ApiBaseUrl}/v1/album/{song.album_id}/artwork";
-			LoadImageWithHeaders(imageURL, TokenManager.AccessToken);
+			pbSong.Image = GetImageWithHeaders(imageURL, TokenManager.AccessToken);
 
 			var duration = TimeSpan.FromMilliseconds(song.Duration);
 			var formattedDuration = duration.ToString("mm':'ss");
@@ -541,7 +560,7 @@ namespace MusicStreaming
 			trackBar.Value = (int)mpvPlayer.Position.TotalMilliseconds;
 		}
 
-		private void LoadImageWithHeaders(string imageUrl, string bearerToken)
+		private Image GetImageWithHeaders(string imageUrl, string bearerToken)
 		{
 			using (WebClient client = new WebClient())
 			{
@@ -549,10 +568,10 @@ namespace MusicStreaming
 
 				byte[] imageData = client.DownloadData(imageUrl);
 
-				string tempFilePath = System.IO.Path.GetTempFileName();
-				System.IO.File.WriteAllBytes(tempFilePath, imageData);
-
-				pbSong.ImageLocation = tempFilePath;
+				using (MemoryStream memoryStream = new MemoryStream(imageData))
+				{
+					return Image.FromStream(memoryStream);
+				}
 			}
 		}
 		#endregion

@@ -744,6 +744,7 @@
 			pbSong.SizeMode = PictureBoxSizeMode.StretchImage;
 			pbSong.TabIndex = 0;
 			pbSong.TabStop = false;
+			pbSong.Click += pbSong_Click;
 			// 
 			// tableLayoutPanel1
 			// 
