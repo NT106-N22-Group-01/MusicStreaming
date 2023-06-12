@@ -31,13 +31,12 @@
 			components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
 			panelMenu = new Panel();
-			iconButton4 = new FontAwesome.Sharp.IconButton();
 			iconButton3 = new FontAwesome.Sharp.IconButton();
 			panel7 = new Panel();
 			iconButtonLogout = new FontAwesome.Sharp.IconButton();
 			btnHome = new FontAwesome.Sharp.IconButton();
 			panel5 = new Panel();
-			label1 = new Label();
+			labelAppName = new Label();
 			panel2 = new Panel();
 			panelTitleBar = new Panel();
 			btnMin = new FontAwesome.Sharp.IconButton();
@@ -109,7 +108,6 @@
 			// panelMenu
 			// 
 			panelMenu.BackColor = Color.FromArgb(25, 26, 31);
-			panelMenu.Controls.Add(iconButton4);
 			panelMenu.Controls.Add(iconButton3);
 			panelMenu.Controls.Add(panel7);
 			panelMenu.Controls.Add(iconButtonLogout);
@@ -121,30 +119,6 @@
 			panelMenu.Name = "panelMenu";
 			panelMenu.Size = new Size(227, 789);
 			panelMenu.TabIndex = 1;
-			// 
-			// iconButton4
-			// 
-			iconButton4.BackColor = Color.FromArgb(25, 26, 31);
-			iconButton4.Dock = DockStyle.Top;
-			iconButton4.FlatAppearance.BorderSize = 0;
-			iconButton4.FlatStyle = FlatStyle.Flat;
-			iconButton4.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-			iconButton4.ForeColor = Color.White;
-			iconButton4.IconChar = FontAwesome.Sharp.IconChar.BarChart;
-			iconButton4.IconColor = Color.White;
-			iconButton4.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			iconButton4.IconSize = 30;
-			iconButton4.ImageAlign = ContentAlignment.MiddleLeft;
-			iconButton4.Location = new Point(0, 197);
-			iconButton4.Name = "iconButton4";
-			iconButton4.Padding = new Padding(10, 0, 0, 0);
-			iconButton4.Size = new Size(227, 48);
-			iconButton4.TabIndex = 8;
-			iconButton4.Tag = "BXH";
-			iconButton4.Text = "   BXH";
-			iconButton4.TextAlign = ContentAlignment.MiddleLeft;
-			iconButton4.TextImageRelation = TextImageRelation.ImageBeforeText;
-			iconButton4.UseVisualStyleBackColor = false;
 			// 
 			// iconButton3
 			// 
@@ -231,7 +205,7 @@
 			// 
 			// panel5
 			// 
-			panel5.Controls.Add(label1);
+			panel5.Controls.Add(labelAppName);
 			panel5.Controls.Add(panel2);
 			panel5.Dock = DockStyle.Top;
 			panel5.Location = new Point(0, 0);
@@ -239,17 +213,17 @@
 			panel5.Size = new Size(227, 100);
 			panel5.TabIndex = 0;
 			// 
-			// label1
+			// labelAppName
 			// 
-			label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-			label1.AutoSize = true;
-			label1.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-			label1.ForeColor = Color.White;
-			label1.Location = new Point(39, 31);
-			label1.Name = "label1";
-			label1.Size = new Size(132, 45);
-			label1.TabIndex = 3;
-			label1.Text = "DPlayer";
+			labelAppName.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+			labelAppName.AutoSize = true;
+			labelAppName.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+			labelAppName.ForeColor = Color.White;
+			labelAppName.Location = new Point(28, 33);
+			labelAppName.Name = "labelAppName";
+			labelAppName.Size = new Size(160, 45);
+			labelAppName.TabIndex = 3;
+			labelAppName.Text = "MusicBox";
 			// 
 			// panel2
 			// 
@@ -895,7 +869,7 @@
 		private System.Windows.Forms.Panel panel5;
 		private System.Windows.Forms.Panel panel7;
 		private FontAwesome.Sharp.IconButton iconButtonLogout;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label labelAppName;
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Timer timer;
 		private System.Windows.Forms.Panel panel9;
@@ -923,7 +897,6 @@
 		private System.Windows.Forms.Label lbSongName;
 		private System.Windows.Forms.PictureBox pbSong;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private FontAwesome.Sharp.IconButton iconButton4;
 		private FontAwesome.Sharp.IconButton iconButton3;
 		private Panel panel3;
 		private RJCodeAdvance.RJControls.RJTextBox rjTextBoxQuery;
