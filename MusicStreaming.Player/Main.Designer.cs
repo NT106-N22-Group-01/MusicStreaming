@@ -368,7 +368,7 @@
 			// columnSongDuration
 			// 
 			columnSongDuration.Text = "Duration";
-			columnSongDuration.Width = 140;
+			columnSongDuration.Width = 120;
 			// 
 			// columnSongView
 			// 

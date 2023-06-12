@@ -686,6 +686,7 @@ namespace MusicStreaming.Player
 			mpvPlayer.API.SetPropertyString("http-header-fields", $"Authorization:  Bearer {token}");
 			mpvPlayer.API.SetPropertyString("audio-display", "no");
 			mpvPlayer.API.SetPropertyString("video", "no");
+			btnPlay.Image = Properties.Resources.icons8_pause_32px;
 			SetVolume(Volume);
 			mpvPlayer.Load(url);
 			mpvPlayer.Resume();
@@ -697,10 +698,12 @@ namespace MusicStreaming.Player
 			{
 				if (mpvPlayer.IsPlaying)
 				{
+					btnPlay.Image = Properties.Resources.icons8_play_32px_3;
 					mpvPlayer.Pause();
 				}
 				else
 				{
+					btnPlay.Image = Properties.Resources.icons8_pause_32px;
 					mpvPlayer.Resume();
 				}
 			}
