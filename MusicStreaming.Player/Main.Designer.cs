@@ -120,7 +120,6 @@
 			panelMenu.Name = "panelMenu";
 			panelMenu.Size = new Size(227, 789);
 			panelMenu.TabIndex = 1;
-			panelMenu.Paint += panelMenu_Paint;
 			// 
 			// iconButton4
 			// 
@@ -321,10 +320,6 @@
 			btnExit.UseVisualStyleBackColor = true;
 			btnExit.Click += btnExit_Click;
 			// 
-			// timer
-			// 
-			timer.Tick += timer1_Tick;
-			// 
 			// panel9
 			// 
 			panel9.Dock = DockStyle.Left;
@@ -373,7 +368,6 @@
 			listViewSongs.TabIndex = 4;
 			listViewSongs.UseCompatibleStateImageBehavior = false;
 			listViewSongs.View = View.Details;
-			listViewSongs.SelectedIndexChanged += listViewSongs_SelectedIndexChanged;
 			listViewSongs.MouseDoubleClick += listViewSongs_MouseDoubleClick;
 			// 
 			// columnNo
@@ -720,7 +714,6 @@
 			panel1.Name = "panel1";
 			panel1.Size = new Size(380, 110);
 			panel1.TabIndex = 0;
-			panel1.Click += panel1_Click;
 			// 
 			// lbSongArtist
 			// 
